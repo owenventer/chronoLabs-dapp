@@ -1,5 +1,15 @@
 module.exports = {
   mode: "jit",
+  screens: {
+    'sm': '640px',
+    'md': '1024px',
+    'lg': '1280px',
+    'xl': '1920px',
+  },
+  colors:{
+    'solgreen':'#14F195',
+    'solpurple':'#9945FF',
+  },
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -21,10 +31,7 @@ module.exports = {
     // TODO: Theme needs works
     themes: [
       {
-        colors:{
-          'solgreen':'#14F195',
-          'solpurple':'#9945FF',
-        },
+        
         'solana': { 
           fontFamily: {
             display: ['PT Mono, monospace'],

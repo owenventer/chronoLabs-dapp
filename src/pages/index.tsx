@@ -20,13 +20,13 @@ export const HomeView: FC = ({ }) => {
 
   return (
 
-    <div className="md:hero mx-auto p-2 m-5">
-      <button className=" absolute top-20 right-10 shadow-lg bg-black text-neutral-content bg-opacity-50 rounded text-gray-100 py-2 px-2 "> New Business</button>
-      <div className="md:hero-content flex flex-col  items-center shadow-lg bg-black text-neutral-content bg-opacity-50 rounded mt-3">
+    <div className="md:hero mx-auto p-5 m-10">
+      <Link href="/newBusiness"><button className=" absolute top-20 right-10 shadow-lg bg-black text-neutral-content bg-opacity-50 rounded text-gray-100 p-2 "> New Business</button> </Link>
+      <div className="md:hero-content flex flex-col  items-center shadow-lg bg-black text-neutral-content bg-opacity-50 rounded mt-6">
         <Image src='/fullLogo.png' alt='chronoLabsMainLogo' width={250} height={250}/>
           
         
-        <div className="flex items-center justify-center pb-6">
+        <div className="grid sm:grid-cols-1 m-1 md:grid-cols-2">
           <CompanyCard
           companyName={"solBeach"}/>
            <CompanyCard
