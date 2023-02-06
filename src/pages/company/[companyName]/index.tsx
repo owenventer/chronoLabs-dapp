@@ -7,12 +7,6 @@ import {useRouter} from 'next/router';
 // Wallet
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 
-// Components
-import { RequestAirdrop } from '../../components/RequestAirdrop';
-import pkg from '../../../package.json';
-
-// Store
-import useUserSOLBalanceStore from '../../stores/useUserSOLBalanceStore';
 
 export function EmployeeDashView({ }){
   const wallet = useWallet();
@@ -27,8 +21,8 @@ export function EmployeeDashView({ }){
 
     <div className="md:hero mx-auto m-10 p-5">
       {/* navigation buttons in top corners  */}
-      <button className=" absolute top-20 right-10 shadow-lg bg-black text-neutral-content bg-opacity-50 rounded text-gray-100 py-2 px-2 "> My Profile</button>
-      <Link href="/"> <button className=" absolute top-20 left-10 shadow-lg bg-black text-neutral-content bg-opacity-50 rounded text-gray-100 py-2 px-2 ">Back</button> </Link>
+      <button className=" absolute top-20 right-10 shadow-lg bg-black bg-opacity-50 rounded text-gray-100 py-2 px-2 "> My Profile</button>
+      <Link href="/"> <button className=" absolute top-20 left-10 shadow-lg bg-black bg-opacity-50 rounded text-gray-100 py-2 px-2 ">Back</button> </Link>
       {/* Main div */}
       <div className="md:hero-content flex flex-col  items-center shadow-lg bg-black text-neutral-content bg-opacity-50 rounded mt-3">
         <Image src={imgLink} alt='chronoLabsMainLogo' width={250} height={250}/>
