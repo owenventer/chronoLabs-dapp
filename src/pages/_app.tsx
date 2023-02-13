@@ -7,14 +7,14 @@ import { ContentContainer } from '../components/ContentContainer';
 import Notifications from '../components/Notification'
 import SignInPage from 'components/SignInPage';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { getLogStatus,setLogStatus } from 'hooks/logStatus';
+
 
 
 require('@solana/wallet-adapter-react-ui/styles.css');
 require('../styles/globals.css');
 
+
 const App: FC<AppProps> = ({ Component, pageProps }) => {
-  console.log(getLogStatus());
   
 
     return (
@@ -28,7 +28,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
               <Notifications />
               <AppBar/>
               <ContentContainer>
-                {getLogStatus() ?<Component {...pageProps} /> : <SignInPage logStatus={getLogStatus()} setLogStatus={setLogStatus}></SignInPage>}
+                {<Component {...pageProps} />}
                 
               </ContentContainer>
               

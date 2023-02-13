@@ -15,8 +15,7 @@ import pkg from '../../package.json';
 import useUserSOLBalanceStore from '../stores/useUserSOLBalanceStore';
 
 export const NewBusiness: FC = ({ }) => {
-  const wallet = useWallet();
-  const { connection } = useConnection();
+ 
 
   return (
 
@@ -53,11 +52,11 @@ export const NewBusiness: FC = ({ }) => {
                 <label className="flex rounded-lg flex-col w-full h-10 border-2 border bg-[#744f90] border-gray-600">
                     <div className="flex flex-col items-center justify-center mx-auto">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                            className="pt-1 w-8 h-8 text-gray-400 group-hover:text-gray-600" viewBox="0 0 20 20"
+                            className="pt-1 w-8 h-8 text-gray-400 group-hover:text-gray-600" viewBox="0 0 20 20" 
                             fill="currentColor">
-                            <path fill-rule="evenodd"
+                            <path fillRule="evenodd"
                                 d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                                clip-rule="evenodd" />
+                                clipRule="evenodd" />
                         </svg>
                     </div>
                     <input type="file" className="opacity-0 w-10" />

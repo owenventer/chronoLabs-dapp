@@ -9,33 +9,33 @@ import { notify } from "../utils/notifications";
 import Image from 'next/image';
 
 
-export function SignInPage({logStatus,setLogStatus}){
+export function SignInPage(){
 
     //Signing to prove wallet ownership
     const { publicKey, signMessage } = useWallet();
 
 
-    const onClick = useCallback(async () => {
-        try {
-            // `publicKey` will be null if the wallet isn't connected
-            if (!publicKey) throw new Error('Wallet not connected!');
-            // `signMessage` will be undefined if the wallet doesn't support it
-            if (!signMessage) throw new Error('Wallet does not support message signing!');
-            // Encode anything as bytes
-            const message = new TextEncoder().encode('Hello, world!');
-            // Sign the bytes using the wallet
-            const signature = await signMessage(message);
-            // Verify that the bytes were signed using the private key that matches the known public key
-            if (!verify(signature, message, publicKey.toBytes())) throw new Error('Invalid signature!');
-            notify({ type: 'success', message: 'Sign message successful!', txid: bs58.encode(signature) });
-            setLogStatus(true);
+    // const onClick = useCallback(async () => {
+    //     try {
+    //         // `publicKey` will be null if the wallet isn't connected
+    //         if (!publicKey) throw new Error('Wallet not connected!');
+    //         // `signMessage` will be undefined if the wallet doesn't support it
+    //         if (!signMessage) throw new Error('Wallet does not support message signing!');
+    //         // Encode anything as bytes
+    //         const message = new TextEncoder().encode('Hello, world!');
+    //         // Sign the bytes using the wallet
+    //         const signature = await signMessage(message);
+    //         // Verify that the bytes were signed using the private key that matches the known public key
+    //         if (!verify(signature, message, publicKey.toBytes())) throw new Error('Invalid signature!');
+    //         notify({ type: 'success', message: 'Sign message successful!', txid: bs58.encode(signature) });
+    //         setLogStatus(true);
 
-        } catch (error: any) {
-            notify({ type: 'error', message: `Sign Message failed!`, description: error?.message });
-            console.log('error', `Sign Message failed! ${error?.message}`);
+    //     } catch (error: any) {
+    //         notify({ type: 'error', message: `Sign Message failed!`, description: error?.message });
+    //         console.log('error', `Sign Message failed! ${error?.message}`);
 
-        }
-    }, [publicKey, signMessage,setLogStatus]);
+    //     }
+    // }, [publicKey, signMessage,setLogStatus]);
 
   return (
 
@@ -50,7 +50,7 @@ export function SignInPage({logStatus,setLogStatus}){
             <div className="flex flex-row justify-center">
             <div className="relative group items-center">
                
-                <button
+                {/* <button
                     className="group btn bg-gradient-to-br from-[#14F195] to-[#14F195] text-black font-bold p-2 w-2/3 m-2 mx-10 rounded hover:scale-105"
                     onClick={onClick} disabled={!publicKey}
                 >
@@ -60,7 +60,7 @@ export function SignInPage({logStatus,setLogStatus}){
                     <span className="block group-disabled:hidden " > 
                         Sign Message 
                     </span>
-                </button>
+                </button> */}
             </div>
         </div>
         </div>
