@@ -91,16 +91,13 @@ export const GenerateSolPay: FC = () => {
         process.env.NEXT_PUBLIC_RPC,
         'confirmed',
       );
-    //const { publicKey } = useWallet();
-    //const [amount1, setValue] = useState("0.1");
     let paymentStatus: string;
     
-    //Standard vars
+        //Standard variables for SolanaPay transaction
         const wallet=useWallet();
         //default address set below, this is changed to the correct address later. 
         const recipient =new PublicKey("9AihNo84zvCbJNPH6aceCa3SuGDCJZrRuJ3XR1SypZ5n");
-        //let amount = new BigNumber(0.1);
-        
+
         const [reference,setReference] = useState(new Keypair().publicKey);
         console.log("GENERATING NEW KEYPAIR:"+reference);
         const label = 'SolMerchant Transaction';
@@ -120,7 +117,6 @@ export const GenerateSolPay: FC = () => {
             setIsDone(false);
             setSPP(true);
             const recipient =wallet.publicKey;
-            //const qrValue="solana:"+publicKey+"?amount="+amount1+"&&label=SnapSol+Payment"
             console.log('2. 🛍 Simulate a customer checkout \n');
             setReference(new Keypair().publicKey);
             console.log("GENERATING NEW KEYPAIR INSIDE :"+reference);
@@ -135,11 +131,10 @@ export const GenerateSolPay: FC = () => {
             }
             setSPP(false);
         }
-    
-    async function mintReceipt(){
-            setMintReceiptClicked(true);
-            //DATE INFO 
-            
+            //create NFT receipts with CrossMint
+            async function mintReceipt(){
+                setMintReceiptClicked(true);
+                //Date of the transaction to include in receipt 
                 var date = new Date().getDate(); //Current Date
                 var month = new Date().getMonth() + 1; //Current Month
                 var year = new Date().getFullYear(); //Current Year
@@ -156,8 +151,7 @@ export const GenerateSolPay: FC = () => {
 
             const collectionName = "default-solana" // change if you've created a collection
             const recipient = "solana:"+ wallet.publicKey;
-            // Or with just an email:
-            // const recipient = "email:peter@crossmint.com:polygon"
+
 
             const reqBody = JSON.stringify({
             "metadata": {
@@ -181,7 +175,6 @@ export const GenerateSolPay: FC = () => {
             method: 'POST',
             headers: reqHeader,
             body: reqBody,
-            //redirect: 'follow'
             };
 
             fetch(`https://www.crossmint.com/api/2022-06-09/collections/${collectionName}/nfts`, requestOptions)

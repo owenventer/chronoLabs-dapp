@@ -20,6 +20,7 @@ export const PointOfSale: FC = ({ }) => {
   const router = useRouter();
   const companyName=router.query.companyName;
   console.log(companyName);
+  //getting current compnay Logo with next routing
   const imgLink="/"+companyName+"Logo.png"
 
 
