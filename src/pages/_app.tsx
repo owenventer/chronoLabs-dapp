@@ -7,6 +7,7 @@ import { ContentContainer } from '../components/ContentContainer';
 import Notifications from '../components/Notification'
 import SignInPage from 'components/SignInPage';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { SendVersionedTransaction } from '../components/SendVersionedTransaction';
 
 
 
@@ -15,8 +16,8 @@ require('../styles/globals.css');
 
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
-  
-
+  const { publicKey, sendTransaction } = useWallet();
+  //console.log(publicKey);
     return (
         <>
           <Head>
@@ -28,6 +29,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
               <Notifications />
               <AppBar/>
               <ContentContainer>
+                
                 {<Component {...pageProps} />}
                 
               </ContentContainer>
