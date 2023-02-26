@@ -30,52 +30,97 @@ export function SalesReport({ }){
         {/* Button div */}
         <div className="grid grid-cols-1 m-1">
           <p className="block m-2 text-center text-lg font-la text-gray-900 dark:text-white">Employee Report</p>
-          <div className="relative overflow-x-auto">
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th>Employee Name</th>
-                <th>Wallet</th>
-                <th>Hours Worked (D)</th>
-                <th>Hours Worked (W)</th>
-                <th>Sales</th>
-                <th>Pay</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Sol Ana
-                </th>
-                <td>afkjhafkhfdjdjhf38hkah39h</td>
-                <td>7</td>
-                <td>27</td>
-                <td>$309</td>
-                <td>$1200</td>
-              </tr>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Sol Ana
-                </th>
-                <td>afkjhafkhfdjdjhf38hkah39h</td>
-                <td>7</td>
-                <td>27</td>
-                <td>$309</td>
-                <td>$1200</td>
-              </tr>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Sol Ana
-                </th>
-                <td>afkjhafkhfdjdjhf38hkah39h</td>
-                <td>7</td>
-                <td>27</td>
-                <td>$309</td>
-                <td>$1200</td>
-              </tr>
-            </tbody>
-          </table>
-          </div>
+          <section className="container mx-auto p-6 font-mono">
+            <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+              <div className="w-full overflow-x-auto table-fixed">
+                <table className="w-full">
+                  <thead>
+                    <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                      <th className="px-4 py-3">Employee Name</th>
+                      <th className="px-4 py-3">Wallet</th>
+                      <th className="px-4 py-3">Hours Worked (D)</th>
+                      <th className="px-4 py-3">Hours Worked (W)</th>
+                      <th className="px-4 py-3">Sales</th>
+                      <th className="px-4 py-3">Pay</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white">
+                    <tr className="text-gray-700">
+                      <td className="px-4 py-3 border">
+                        <div className="flex items-center text-sm">
+                          {/* We can add images if we want to:
+                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
+                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
+                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                          </div> */}
+                          <div>
+                            <p className="font-semibold text-black">Sol Ana</p>
+                            <p className="text-xs text-gray-600">Developer</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-ms font-semibold border">GeQx...rT45</td>
+                      <td className="px-4 py-3 text-xs border">
+                        <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> 7 </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm border">26</td>
+                      <td className="px-4 py-3 text-sm border">$309</td>
+                      <td className="px-4 py-3 text-sm border">$2600</td>
+                    </tr>
+                    <tr className="text-gray-700">
+                      <td className="px-4 py-3 border">
+                        <div className="flex items-center text-sm">
+                          {/* We can add images if we want to:
+                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
+                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
+                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                          </div> */}
+                          <div>
+                            <p className="font-semibold text-black">Sol Ana</p>
+                            <p className="text-xs text-gray-600">Developer</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-ms font-semibold border">GeQx...rT45</td>
+                      <td className="px-4 py-3 text-xs border">
+                        <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> 7 </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm border">26</td>
+                      <td className="px-4 py-3 text-sm border">$309</td>
+                      <td className="px-4 py-3 text-sm border">$2600</td>
+                    </tr>
+                    <tr className="text-gray-700">
+                      <td className="px-4 py-3 border">
+                        <div className="flex items-center text-sm">
+                          {/* We can add images if we want to:
+                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
+                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
+                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                          </div> */}
+                          <div>
+                            <p className="font-semibold text-black">Sol Ana</p>
+                            <p className="text-xs text-gray-600">Developer</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-ms font-semibold border">GeQx...rT45</td>
+                      <td className="px-4 py-3 text-xs border">
+                        <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> 7 </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm border">26</td>
+                      <td className="px-4 py-3 text-sm border">$309</td>
+                      <td className="px-4 py-3 text-sm border">$2600</td>
+                    </tr>
+                   
+                    
+                    
+                   
+                   
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
         
         </div>
       </div>
