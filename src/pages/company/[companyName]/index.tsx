@@ -33,7 +33,9 @@ export function EmployeeDashView({ }){
           <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-3/4 m-2 mx-10 rounded"> Pick up Pizza</button>
           <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-3/4 m-2 mx-10 rounded"> Deliver Pizza</button>
           <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-3/4 m-2 mx-10 rounded"> Back at Restaurant</button>
-          <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-3/4 m-2 mx-10 rounded"> POS Terminal</button>
+          <Link href={`${companyName}/POS`}>
+            <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-3/4 m-2 mx-10 rounded"> POS Terminal</button>
+          </Link>
         </div>
       </div>
     </div>

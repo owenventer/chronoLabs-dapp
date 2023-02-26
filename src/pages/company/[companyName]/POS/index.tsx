@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 
 // Components
-import { GenerateSolPay } from '../../../components/GenerateSolPay';
+import { GenerateSolPay } from '../../../../components/GenerateSolPay';
 import { useRouter } from 'next/router';
 
 
