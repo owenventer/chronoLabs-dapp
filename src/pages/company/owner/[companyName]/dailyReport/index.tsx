@@ -8,7 +8,7 @@ import {useRouter} from 'next/router';
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 
 
-export function SalesReport({ }){
+export function DailyReport({ }){
   const wallet = useWallet();
   const { connection } = useConnection();
 
@@ -29,18 +29,15 @@ export function SalesReport({ }){
         <Image src={imgLink} alt='chronoLabsMainLogo' width={250} height={250}/>
         {/* Button div */}
         <div className="grid grid-cols-1 m-1">
-          <p className="block m-2 text-center text-2xl font-la text-white-200">Yearly Report</p>
+          <p className="block m-2 text-center text-2xl font-la text-white-200">Daily Log</p>
           <section className="container mx-auto p-6 font-mono">
             <div className="w-full mb-8 overflow-hidden  shadow-lg">
               <div className="w-full overflow-x-auto table-fixed">
-                <table className="w-full">
+                <table className=" table-fixed">
                   <thead>
                     <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-gray-500 uppercase">
-                      <th className="px-4 py-3 border">Employee Name</th>
-                      <th className="px-4 py-3 border">Payroll Taxes</th>
-                      <th className="px-4 py-3 border">Local Taxes</th>
-                      <th className="px-4 py-3 border">State Taxes</th>
-                      <th className="px-4 py-3 border">Federal Taxes</th>
+                      <th className="w-3/7 px-4 py-3 border">Employee Name</th>
+                      <th className="px-4 py-3 border">Activity</th>
                       
                     </tr>
                   </thead>
@@ -59,10 +56,7 @@ export function SalesReport({ }){
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
+                      <td className="px-4 py-3 text-sm font-semibold border">Clock In</td>
                       
                     </tr>
                     <tr className="text-gray-100">
@@ -70,7 +64,7 @@ export function SalesReport({ }){
                         <div className="flex items-center text-sm">
                           {/* We can add images if we want to:
                            <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1$1040" alt="" loading="lazy" />
+                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
                             <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                           </div> */}
                           <div>
@@ -79,18 +73,34 @@ export function SalesReport({ }){
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      
+                      <td className="px-4 py-3 text-sm font-semibold border">Picked Up Pizza</td>
+
+                     
                     </tr>
                     <tr className="text-gray-100">
                       <td className="px-4 py-3 border">
                         <div className="flex items-center text-sm">
                           {/* We can add images if we want to:
                            <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1$1040" alt="" loading="lazy" />
+                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
+                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                          </div> */}
+                          <div>
+                            <p className="font-semibold text-gray-100">Dev Eloper</p>
+                            
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-sm font-semibold border">Clocked In</td>
+
+                     
+                    </tr>
+                    <tr className="text-gray-100">
+                      <td className="px-4 py-3 border">
+                        <div className="flex items-center text-sm">
+                          {/* We can add images if we want to:
+                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
+                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
                             <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                           </div> */}
                           <div>
@@ -99,11 +109,26 @@ export function SalesReport({ }){
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3 border">$104</td>
-                      <td className="px-4 py-3 border">$104</td>
+                      <td className="px-4 py-3 text-sm font-semibold border">Sold Pizza to Ght8...6Gt7 for $12.99</td>
                       
+                    </tr>
+                    <tr className="text-gray-100">
+                      <td className="px-4 py-3 border">
+                        <div className="flex items-center text-sm">
+                          {/* We can add images if we want to:
+                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
+                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
+                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                          </div> */}
+                          <div>
+                            <p className="font-semibold text-gray-100">Sol Ana</p>
+                            
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-sm font-semibold border">Clocked Out</td>
+
+                     
                     </tr>
                    
                     
@@ -121,4 +146,4 @@ export function SalesReport({ }){
     </div>
   );
 };
-export default SalesReport;
+export default DailyReport;

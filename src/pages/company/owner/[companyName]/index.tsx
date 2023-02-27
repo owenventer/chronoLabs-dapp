@@ -29,10 +29,11 @@ export function EmployerDashView({ }){
         {/* Button div */}
         <div className="grid grid-cols-2 m-1">
         <div><Link href={`${companyName}/salesReport`}><button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded"> Daily Reports</button></Link></div>
-        <div><button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded"> Employee Reports</button></div>
-        <div><button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded"> Tax Reports</button></div>
-        <div><button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded"> Daily Activity</button></div>
-        <div><button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded"> Manage Employee</button></div>
+        <div><Link href={`${companyName}/employeeReport`}><button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded"> Employee Reports</button></Link></div>
+        <div><Link href={`${companyName}/taxReport`}><button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded"> Tax Reports</button></Link></div>
+        <div><Link href={`${companyName}/dailyReport`}><button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded"> Daily Activity</button></Link></div>
+        <div><Link href={`${companyName}/manageEmployee`}><button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded"> Manage Employee</button></Link></div>
+        <div><Link href={`${companyName}/addEmployee`}><button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded"> Add Employee</button></Link></div>
 
         </div>
       </div>
