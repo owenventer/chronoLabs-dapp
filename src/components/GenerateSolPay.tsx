@@ -10,7 +10,7 @@ async function validatePayment(reference,paymentStatus,recipient,amount,url){
 
     const connection = new Connection(
         //get mainnet RPC
-        process.env.NEXT_PUBLIC_RPC,
+        process.env.NEXTfi_PUBLIC_RPC,
         'confirmed',
       );
       
