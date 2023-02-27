@@ -29,23 +29,23 @@ export function SalesReport({ }){
         <Image src={imgLink} alt='chronoLabsMainLogo' width={250} height={250}/>
         {/* Button div */}
         <div className="grid grid-cols-1 m-1">
-          <p className="block m-2 text-center text-lg font-la text-gray-900 dark:text-white">Employee Report</p>
+          <p className="block m-2 text-center text-2xl font-la text-white-200">Employee Report</p>
           <section className="container mx-auto p-6 font-mono">
-            <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+            <div className="w-full mb-8 overflow-hidden  shadow-lg">
               <div className="w-full overflow-x-auto table-fixed">
                 <table className="w-full">
                   <thead>
-                    <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                      <th className="px-4 py-3">Employee Name</th>
-                      <th className="px-4 py-3">Wallet</th>
-                      <th className="px-4 py-3">Hours Worked (D)</th>
-                      <th className="px-4 py-3">Hours Worked (W)</th>
-                      <th className="px-4 py-3">Sales</th>
-                      <th className="px-4 py-3">Pay</th>
+                    <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-gray-500 uppercase">
+                      <th className="px-4 py-3 border">Employee Name</th>
+                      <th className="px-4 py-3 border">Wallet</th>
+                      <th className="px-4 py-3 border">Hours Worked (D)</th>
+                      <th className="px-4 py-3 border">Hours Worked (W)</th>
+                      <th className="px-4 py-3 border">Sales</th>
+                      <th className="px-4 py-3 border">Pay</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white">
-                    <tr className="text-gray-700">
+                  <tbody className="bg-gray-700">
+                    <tr className="text-gray-100">
                       <td className="px-4 py-3 border">
                         <div className="flex items-center text-sm">
                           {/* We can add images if we want to:
@@ -54,20 +54,20 @@ export function SalesReport({ }){
                             <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                           </div> */}
                           <div>
-                            <p className="font-semibold text-black">Sol Ana</p>
-                            <p className="text-xs text-gray-600">Developer</p>
+                            <p className="font-semibold text-gray-100">Sol Ana</p>
+                            <p className="text-xs text-gray-300">Developer</p>
                           </div>
                         </div>
                       </td>
                       <td className="px-4 py-3 text-ms font-semibold border">GeQx...rT45</td>
                       <td className="px-4 py-3 text-xs border">
-                        <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> 7 </span>
+                        <span className="px-4 py-3 text-ms font-semibold"> 7 </span>
                       </td>
                       <td className="px-4 py-3 text-sm border">26</td>
                       <td className="px-4 py-3 text-sm border">$309</td>
                       <td className="px-4 py-3 text-sm border">$2600</td>
                     </tr>
-                    <tr className="text-gray-700">
+                    <tr className="text-gray-100">
                       <td className="px-4 py-3 border">
                         <div className="flex items-center text-sm">
                           {/* We can add images if we want to:
@@ -76,20 +76,20 @@ export function SalesReport({ }){
                             <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                           </div> */}
                           <div>
-                            <p className="font-semibold text-black">Sol Ana</p>
-                            <p className="text-xs text-gray-600">Developer</p>
+                            <p className="font-semibold text-gray-100">Sol Ana</p>
+                            <p className="text-xs text-gray-300">Developer</p>
                           </div>
                         </div>
                       </td>
                       <td className="px-4 py-3 text-ms font-semibold border">GeQx...rT45</td>
                       <td className="px-4 py-3 text-xs border">
-                        <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> 7 </span>
+                        <span className="px-4 py-3 text-ms font-semibold"> 7 </span>
                       </td>
                       <td className="px-4 py-3 text-sm border">26</td>
                       <td className="px-4 py-3 text-sm border">$309</td>
                       <td className="px-4 py-3 text-sm border">$2600</td>
                     </tr>
-                    <tr className="text-gray-700">
+                    <tr className="text-gray-100">
                       <td className="px-4 py-3 border">
                         <div className="flex items-center text-sm">
                           {/* We can add images if we want to:
@@ -98,14 +98,14 @@ export function SalesReport({ }){
                             <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                           </div> */}
                           <div>
-                            <p className="font-semibold text-black">Sol Ana</p>
-                            <p className="text-xs text-gray-600">Developer</p>
+                            <p className="font-semibold text-gray-100">Sol Ana</p>
+                            <p className="text-xs text-gray-300">Developer</p>
                           </div>
                         </div>
                       </td>
                       <td className="px-4 py-3 text-ms font-semibold border">GeQx...rT45</td>
                       <td className="px-4 py-3 text-xs border">
-                        <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> 7 </span>
+                        <span className="px-4 py-3 text-ms font-semibold"> 7 </span>
                       </td>
                       <td className="px-4 py-3 text-sm border">26</td>
                       <td className="px-4 py-3 text-sm border">$309</td>
