@@ -1,35 +1,44 @@
 // Next, React
-import { FC, useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import {useRouter} from 'next/router';
+import { FC, useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 // Wallet
-import { useWallet, useConnection } from '@solana/wallet-adapter-react';
+import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 
-
-export function EmployeeReport({ }){
+export function EmployeeReport({}) {
   const wallet = useWallet();
   const { connection } = useConnection();
 
   //Link for company image
   const router = useRouter();
-  const companyName=router.query.companyName;
-  console.log(companyName); 
-  const imgLink="/"+companyName+"Logo.png"
+  const companyName = router.query.companyName;
+  console.log(companyName);
+  const imgLink = "/" + companyName + "Logo.png";
   console.log(imgLink);
   return (
-
     <div className="md:hero mx-auto p-5 m-10">
       {/* navigation buttons in top corners  */}
-    
-      <Link href={`../${companyName}`}> <button className=" absolute top-20 left-10 shadow-lg bg-black  bg-opacity-50 rounded text-gray-100 py-2 px-2 ">Back</button> </Link>
+
+      <Link href={`../${companyName}`}>
+        <button className=" absolute top-20 left-10 shadow-lg bg-black  bg-opacity-50 rounded text-gray-100 py-2 px-2 ">
+          Back
+        </button>
+      </Link>
       {/* Main div */}
       <div className="md:hero-content flex flex-col  items-center shadow-lg bg-black text-neutral-content bg-opacity-50 rounded mt-3">
-        <Image src={imgLink} alt='chronoLabsMainLogo' width={250} height={250}/>
+        <Image
+          src={imgLink}
+          alt="chronoLabsMainLogo"
+          width={250}
+          height={250}
+        />
         {/* Button div */}
         <div className="grid grid-cols-1 m-1">
-          <p className="block m-2 text-center text-2xl font-la text-white-200">Employee Report</p>
+          <p className="block m-2 text-center text-2xl font-la text-white-200">
+            Employee Report
+          </p>
           <section className="container mx-auto p-6 font-mono">
             <div className="w-full mb-8 overflow-hidden  shadow-lg">
               <div className="w-full overflow-x-auto table-fixed">
@@ -54,14 +63,20 @@ export function EmployeeReport({ }){
                             <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                           </div> */}
                           <div>
-                            <p className="font-semibold text-gray-100">Sol Ana</p>
+                            <p className="font-semibold text-gray-100">
+                              Sol Ana
+                            </p>
                             <p className="text-xs text-gray-300">Developer</p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">GeQx...rT45</td>
+                      <td className="px-4 py-3 text-sm font-semibold border">
+                        GeQx...rT45
+                      </td>
                       <td className="px-4 py-3 text-xs border">
-                        <span className="px-4 py-3 text-sm font-semibold"> 7 </span>
+                        <span className="px-4 py-3 text-sm font-semibold">
+                          7
+                        </span>
                       </td>
                       <td className="px-4 py-3 text-sm border">26</td>
                       <td className="px-4 py-3 text-sm border">$309</td>
@@ -76,14 +91,20 @@ export function EmployeeReport({ }){
                             <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                           </div> */}
                           <div>
-                            <p className="font-semibold text-gray-100">Sol Ana</p>
+                            <p className="font-semibold text-gray-100">
+                              Sol Ana
+                            </p>
                             <p className="text-xs text-gray-300">Developer</p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">GeQx...rT45</td>
+                      <td className="px-4 py-3 text-sm font-semibold border">
+                        GeQx...rT45
+                      </td>
                       <td className="px-4 py-3 text-xs border">
-                        <span className="px-4 py-3 text-sm font-semibold"> 7 </span>
+                        <span className="px-4 py-3 text-sm font-semibold">
+                          7
+                        </span>
                       </td>
                       <td className="px-4 py-3 text-sm border">26</td>
                       <td className="px-4 py-3 text-sm border">$309</td>
@@ -98,33 +119,33 @@ export function EmployeeReport({ }){
                             <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                           </div> */}
                           <div>
-                            <p className="font-semibold text-gray-100">Sol Ana</p>
+                            <p className="font-semibold text-gray-100">
+                              Sol Ana
+                            </p>
                             <p className="text-xs text-gray-300">Developer</p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">GeQx...rT45</td>
+                      <td className="px-4 py-3 text-sm font-semibold border">
+                        GeQx...rT45
+                      </td>
                       <td className="px-4 py-3 text-xs border">
-                        <span className="px-4 py-3 text-sm font-semibold"> 7 </span>
+                        <span className="px-4 py-3 text-sm font-semibold">
+                          7
+                        </span>
                       </td>
                       <td className="px-4 py-3 text-sm border">26</td>
                       <td className="px-4 py-3 text-sm border">$309</td>
                       <td className="px-4 py-3 text-sm border">$2600</td>
                     </tr>
-                   
-                    
-                    
-                   
-                   
                   </tbody>
                 </table>
               </div>
             </div>
           </section>
-        
         </div>
       </div>
     </div>
   );
-};
+}
 export default EmployeeReport;
