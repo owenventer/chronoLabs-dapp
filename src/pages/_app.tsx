@@ -13,7 +13,7 @@ require("@solana/wallet-adapter-react-ui/styles.css");
 require("../styles/globals.css");
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
-  const { publicKey, sendTransaction } = useWallet();
+  //const { publicKey, sendTransaction } = useWallet();
   //console.log(publicKey);
 
   return (

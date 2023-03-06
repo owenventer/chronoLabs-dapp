@@ -7,6 +7,24 @@ import Image from "next/image";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 
 export const NewBusiness: FC = ({}) => {
+  // NFT attribute variables
+  const [businessName, setBusinessName] = useState("");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [businessType, setBusinessType] = useState("");
+  const [EINNumber, setEINNumber] = useState("");
+  //handling the image
+  const [fileUrl, setFileUrl] = useState("");
+  function processImage(event) {
+    const imageFile = event.target.files[0];
+    const imageUrl = URL.createObjectURL(imageFile);
+    setFileUrl(imageUrl);
+  }
+  //Manage the button click
+  function showValues() {
+    console.log(businessName + country + state + businessType + EINNumber);
+  }
+
   return (
     <div className="md:hero mx-auto p-5 m-10">
       <Link href="/">
@@ -33,6 +51,7 @@ export const NewBusiness: FC = ({}) => {
               className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
               placeholder="Magic Eden"
               required
+              onChange={(event) => setBusinessName(event.target.value)}
             />
           </div>
           <div className="m-2">
@@ -45,6 +64,7 @@ export const NewBusiness: FC = ({}) => {
               className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
               placeholder="USA"
               required
+              onChange={(event) => setCountry(event.target.value)}
             />
           </div>
           <div className="m-2">
@@ -57,6 +77,7 @@ export const NewBusiness: FC = ({}) => {
               className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
               placeholder="CA"
               required
+              onChange={(event) => setState(event.target.value)}
             />
           </div>
           <div className="m-2">
@@ -69,6 +90,7 @@ export const NewBusiness: FC = ({}) => {
               className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
               placeholder="NFT Marketplace"
               required
+              onChange={(event) => setBusinessType(event.target.value)}
             />
           </div>
           <div className="m-2">
@@ -81,6 +103,7 @@ export const NewBusiness: FC = ({}) => {
               className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
               placeholder="xxx.xxx.xxx"
               required
+              onChange={(event) => setEINNumber(event.target.value)}
             />
           </div>
           <div className="m-2">
@@ -90,30 +113,53 @@ export const NewBusiness: FC = ({}) => {
             <div className="flex items-center justify-center w-full">
               <label className="flex rounded-lg flex-col w-full h-10 border-2 border bg-[#744f90] border-gray-600">
                 <div className="flex flex-col items-center justify-center mx-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="pt-1 w-8 h-8 text-gray-400 group-hover:text-gray-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  {fileUrl ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      className="pt-1 w-8 h-8 text-[#14F195] group-hover:text-gray-600"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="pt-1 w-8 h-8 text-gray-400 group-hover:text-gray-600"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  )}
                 </div>
-                <input type="file" className="opacity-0 w-10" />
+                <input
+                  type="file"
+                  className="opacity-0 w-10"
+                  accept="image/*"
+                  onChange={processImage}
+                />
               </label>
             </div>
           </div>
         </div>
 
-        <Link href={`/`}>
-          <button className="bg-[#14F195] hover:hover:scale-105 text-black font-bold py-2 px-2 m-2 rounded">
-            Create Business
-          </button>
-        </Link>
+        <button
+          onClick={showValues}
+          className="bg-[#14F195] hover:hover:scale-105 text-black font-bold py-2 px-2 m-2 rounded"
+        >
+          Create Business
+        </button>
       </div>
     </div>
   );
