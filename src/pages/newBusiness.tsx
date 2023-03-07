@@ -2,9 +2,40 @@
 import { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import axios from "axios";
+import {
+  Metaplex,
+  keypairIdentity,
+  bundlrStorage,
+  toMetaplexFile,
+  toBigNumber,
+  walletAdapterIdentity,
+  NftWithToken,
+} from "@metaplex-foundation/js";
+import * as fs from "fs";
+import { Connection, clusterApiUrl, Keypair, Signer } from "@solana/web3.js";
 
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+
+//interfaces
+interface NftData {
+  name: string;
+  symbol: string;
+  description: string;
+  sellerFeeBasisPoints: number;
+  imageFile: string;
+}
+
+interface CollectionNftData {
+  name: string;
+  symbol: string;
+  description: string;
+  sellerFeeBasisPoints: number;
+  imageFile: string;
+  isCollection: boolean;
+  collectionAuthority: Signer;
+}
 
 export const NewBusiness: FC = ({}) => {
   // NFT attribute variables
@@ -14,15 +45,98 @@ export const NewBusiness: FC = ({}) => {
   const [businessType, setBusinessType] = useState("");
   const [EINNumber, setEINNumber] = useState("");
   //handling the image
-  const [fileUrl, setFileUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   function processImage(event) {
-    const imageFile = event.target.files[0];
-    const imageUrl = URL.createObjectURL(imageFile);
-    setFileUrl(imageUrl);
+    const imgFile = event.target.files[0];
+    const imgUrl = URL.createObjectURL(imgFile);
+    setImageUrl(imgUrl);
   }
+
+  //NFT information
+  const nftData = {
+    name: businessName,
+    symbol: businessName[0] + businessName[-1],
+    description: "The master NFT for " + businessName + "on ChronoLabs.",
+    sellerFeeBasisPoints: 0,
+    imageFile: imageUrl,
+  };
+
+  //Solana connection
+  const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
+
+  //Metaplex connection
+  const { publicKey, sendTransaction } = useWallet();
+  const wallet = useWallet();
+  console.log("Connected wallet in create new business: " + Keypair);
+
+  //Metaplex Set up(should this be us or the user?)
+  const metaplex = Metaplex.make(connection)
+    .use(walletAdapterIdentity(wallet))
+    .use(
+      bundlrStorage({
+        //mainnet right now, maybe devnet?
+        address: "https://node1.bundlr.network",
+        providerUrl: process.env.NEXT_PUBLIC_RPC,
+        timeout: 60000,
+      })
+    );
+
   //Manage the button click
   function showValues() {
     console.log(businessName + country + state + businessType + EINNumber);
+  }
+
+  //helper function for uploading assets
+  async function uploadMetadata(metaplex: Metaplex,nftData:NftData): Promise<string> {
+    //get image buffer from user input
+    
+    const response = await axios.get(imageUrl,  { responseType: 'arraybuffer' })
+    const buffer = Buffer.from(response.data, "utf-8")
+
+    // buffer to metaplex file (maybe error with Logo.png)
+    const file = toMetaplexFile(buffer, nftData.imageFile);
+
+    // upload image and get image uri
+    const imageUri = await metaplex.storage().upload(file);
+    console.log("Image URI:", imageUri);
+
+    // upload metadata and get metadata uri (off chain metadata)
+    const { uri } = await metaplex.nfts().uploadMetadata({
+      name: nftData.name,
+      symbol: nftData.symbol,
+      description: nftData.description,
+      image: imageUri,
+    });
+
+    console.log("Metadata Uri:", uri);
+    return uri;
+  }
+
+  //helper function to create an NFT
+  async function createNft(metaplex: Metaplex,uri: string, nftData: NftData): Promise<NftWithToken> {
+    const { nft } = await metaplex.nfts().create(
+      {
+        uri: uri, // Metadata URI
+        name: nftData.name,
+        sellerFeeBasisPoints: nftData.sellerFeeBasisPoints,
+        symbol: nftData.symbol,
+      },
+      { commitment: "finalized" }
+    );
+
+    console.log(
+      `Token Mint: https://explorer.solana.com/address/${nft.address.toString()}?cluster=devnet`
+    );
+
+    return nft;
+  }
+
+  async function mintNFT(){
+  // upload the NFT data and get the URI for the metadata
+  const uri = await uploadMetadata(metaplex, nftData)
+
+  // create an NFT using the helper function and the URI from the metadata
+  const nft = await createNft(metaplex, uri, nftData)
   }
 
   return (
@@ -113,7 +227,7 @@ export const NewBusiness: FC = ({}) => {
             <div className="flex items-center justify-center w-full">
               <label className="flex rounded-lg flex-col w-full h-10 border-2 border bg-[#744f90] border-gray-600">
                 <div className="flex flex-col items-center justify-center mx-auto">
-                  {fileUrl ? (
+                  {imageUrl ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -155,12 +269,13 @@ export const NewBusiness: FC = ({}) => {
         </div>
 
         <button
-          onClick={showValues}
+          onClick={mintNFT}
           className="bg-[#14F195] hover:hover:scale-105 text-black font-bold py-2 px-2 m-2 rounded"
         >
           Create Business
         </button>
       </div>
+      <Image src={imageUrl} width="250" height="250" alt="test"></Image>
     </div>
   );
 };
