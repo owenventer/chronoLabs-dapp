@@ -13,10 +13,11 @@ import {
   NftWithToken,
 } from "@metaplex-foundation/js";
 import * as fs from "fs";
-import { Connection, clusterApiUrl, Keypair, Signer } from "@solana/web3.js";
+import { Connection, clusterApiUrl, Keypair, Signer, PublicKey } from "@solana/web3.js";
 
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import { count } from "console";
 
 //interfaces
 interface NftData {
@@ -51,24 +52,31 @@ export const NewBusiness: FC = ({}) => {
     const imgUrl = URL.createObjectURL(imgFile);
     setImageUrl(imgUrl);
   }
+  const CLPrivateKey= JSON.parse(process.env.NEXT_PUBLIC_ChronoPK ?? "") as number[]
+  const CLPubKey= Keypair.fromSecretKey(Uint8Array.from(CLPrivateKey)).publicKey
+  //console.log("OUR PUBK: "+CLPubKey)
+  //Metaplex connection
+  const { publicKey, sendTransaction } = useWallet();
+  const wallet = useWallet();
+  console.log("connected wallet: "+wallet.publicKey);
 
   //NFT information
   const nftData = {
     name: businessName,
-    symbol: businessName[0] + businessName[-1],
-    description: "The master NFT for " + businessName + "on ChronoLabs.",
+    symbol: businessName[0] + businessName[businessName.length-1],
+    description: "The master NFT for " + businessName + " on ChronoLabs.",
+   
     sellerFeeBasisPoints: 0,
     imageFile: imageUrl,
+    isCollection: true,
+    collectionAuthority: wallet.publicKey,
+    
   };
 
   //Solana connection
   const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
 
-  //Metaplex connection
-  const { publicKey, sendTransaction } = useWallet();
-  const wallet = useWallet();
-  console.log("Connected wallet in create new business: " + Keypair);
-
+  
   //Metaplex Set up(should this be us or the user?)
   const metaplex = Metaplex.make(connection)
     .use(walletAdapterIdentity(wallet))
@@ -87,11 +95,14 @@ export const NewBusiness: FC = ({}) => {
   }
 
   //helper function for uploading assets
-  async function uploadMetadata(metaplex: Metaplex,nftData:NftData): Promise<string> {
+  async function uploadMetadata(
+    metaplex: Metaplex,
+    nftData: NftData
+  ): Promise<string> {
     //get image buffer from user input
-    
-    const response = await axios.get(imageUrl,  { responseType: 'arraybuffer' })
-    const buffer = Buffer.from(response.data, "utf-8")
+
+    const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
+    const buffer = Buffer.from(response.data, "utf-8");
 
     // buffer to metaplex file (maybe error with Logo.png)
     const file = toMetaplexFile(buffer, nftData.imageFile);
@@ -106,37 +117,80 @@ export const NewBusiness: FC = ({}) => {
       symbol: nftData.symbol,
       description: nftData.description,
       image: imageUri,
+      attributes:[
+        {
+          trait_type: "Business Name",
+          value: businessName
+        },
+        {
+          trait_type: "Country",
+          value: country
+        },
+        {
+          trait_type: "State",
+          value: state
+        },
+        {
+          trait_type: "Business Type",
+          value: businessType
+        },
+        {
+          trait_type: "EIN Number",
+          value: EINNumber
+        },
+  
+      ],
     });
 
     console.log("Metadata Uri:", uri);
     return uri;
   }
 
-  //helper function to create an NFT
-  async function createNft(metaplex: Metaplex,uri: string, nftData: NftData): Promise<NftWithToken> {
+  //helper function to create an NFT (collection NFT)
+  async function createCollectionNFT(
+    metaplex: Metaplex,
+    uri: string,
+    nftData: NftData
+  ): Promise<NftWithToken> {
     const { nft } = await metaplex.nfts().create(
       {
         uri: uri, // Metadata URI
         name: nftData.name,
         sellerFeeBasisPoints: nftData.sellerFeeBasisPoints,
+        creators: [ {
+          
+          address: CLPubKey,
+          authority: {
+            //B5N3Q9Fw3zijTA3ih87cNDbst7bJ7AfTri7XJPX9wTNg
+            publicKey: CLPubKey,
+            secretKey:Uint8Array.from(CLPrivateKey)
+        },
+          share: 0,
+        },{
+          address: wallet.publicKey,
+          authority: wallet,
+          share: 100,
+        }],
         symbol: nftData.symbol,
+        isCollection: true,
+        
       },
       { commitment: "finalized" }
     );
 
     console.log(
-      `Token Mint: https://explorer.solana.com/address/${nft.address.toString()}?cluster=devnet`
+      `Collection Mint: https://solscan.io/token/${nft.address.toString()}`
     );
 
     return nft;
   }
 
-  async function mintNFT(){
-  // upload the NFT data and get the URI for the metadata
-  const uri = await uploadMetadata(metaplex, nftData)
+  async function mintNFT() {
+    // upload the NFT data and get the URI for the metadata
+    const uri = await uploadMetadata(metaplex, nftData);
 
-  // create an NFT using the helper function and the URI from the metadata
-  const nft = await createNft(metaplex, uri, nftData)
+    // create an NFT using the helper function and the URI from the metadata
+    const nft = await createCollectionNFT(metaplex, uri, nftData);
   }
 
   return (
@@ -232,13 +286,13 @@ export const NewBusiness: FC = ({}) => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+                      strokeWidth="2"
                       stroke="currentColor"
                       className="pt-1 w-8 h-8 text-[#14F195] group-hover:text-gray-600"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12"
                       />
                     </svg>
