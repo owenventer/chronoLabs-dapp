@@ -13,7 +13,13 @@ import {
   NftWithToken,
 } from "@metaplex-foundation/js";
 import * as fs from "fs";
-import { Connection, clusterApiUrl, Keypair, Signer, PublicKey } from "@solana/web3.js";
+import {
+  Connection,
+  clusterApiUrl,
+  Keypair,
+  Signer,
+  PublicKey,
+} from "@solana/web3.js";
 
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
@@ -52,31 +58,34 @@ export const NewBusiness: FC = ({}) => {
     const imgUrl = URL.createObjectURL(imgFile);
     setImageUrl(imgUrl);
   }
-  const CLPrivateKey= JSON.parse(process.env.NEXT_PUBLIC_ChronoPK ?? "") as number[]
-  const CLPubKey= Keypair.fromSecretKey(Uint8Array.from(CLPrivateKey)).publicKey
+  //managing wallets and keys
+  const CLPrivateKey = JSON.parse(
+    process.env.NEXT_PUBLIC_ChronoPK ?? ""
+  ) as number[];
+  const CLPubKey = Keypair.fromSecretKey(
+    Uint8Array.from(CLPrivateKey)
+  ).publicKey;
   //console.log("OUR PUBK: "+CLPubKey)
   //Metaplex connection
   const { publicKey, sendTransaction } = useWallet();
   const wallet = useWallet();
-  console.log("connected wallet: "+wallet.publicKey);
+  console.log("connected wallet: " + wallet.publicKey);
 
   //NFT information
   const nftData = {
     name: businessName,
-    symbol: businessName[0] + businessName[businessName.length-1],
+    symbol: businessName[0] + businessName[businessName.length - 1],
     description: "The master NFT for " + businessName + " on ChronoLabs.",
-   
+
     sellerFeeBasisPoints: 0,
     imageFile: imageUrl,
     isCollection: true,
     collectionAuthority: wallet.publicKey,
-    
   };
 
   //Solana connection
   const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
 
-  
   //Metaplex Set up(should this be us or the user?)
   const metaplex = Metaplex.make(connection)
     .use(walletAdapterIdentity(wallet))
@@ -117,28 +126,27 @@ export const NewBusiness: FC = ({}) => {
       symbol: nftData.symbol,
       description: nftData.description,
       image: imageUri,
-      attributes:[
+      attributes: [
         {
           trait_type: "Business Name",
-          value: businessName
+          value: businessName,
         },
         {
           trait_type: "Country",
-          value: country
+          value: country,
         },
         {
           trait_type: "State",
-          value: state
+          value: state,
         },
         {
           trait_type: "Business Type",
-          value: businessType
+          value: businessType,
         },
         {
           trait_type: "EIN Number",
-          value: EINNumber
+          value: EINNumber,
         },
-  
       ],
     });
 
@@ -157,23 +165,24 @@ export const NewBusiness: FC = ({}) => {
         uri: uri, // Metadata URI
         name: nftData.name,
         sellerFeeBasisPoints: nftData.sellerFeeBasisPoints,
-        creators: [ {
-          
-          address: CLPubKey,
-          authority: {
-            //B5N3Q9Fw3zijTA3ih87cNDbst7bJ7AfTri7XJPX9wTNg
-            publicKey: CLPubKey,
-            secretKey:Uint8Array.from(CLPrivateKey)
-        },
-          share: 0,
-        },{
-          address: wallet.publicKey,
-          authority: wallet,
-          share: 100,
-        }],
+        creators: [
+          {
+            address: CLPubKey,
+            authority: {
+              //B5N3Q9Fw3zijTA3ih87cNDbst7bJ7AfTri7XJPX9wTNg
+              publicKey: CLPubKey,
+              secretKey: Uint8Array.from(CLPrivateKey),
+            },
+            share: 0,
+          },
+          {
+            address: wallet.publicKey,
+            authority: wallet,
+            share: 100,
+          },
+        ],
         symbol: nftData.symbol,
         isCollection: true,
-        
       },
       { commitment: "finalized" }
     );
@@ -329,8 +338,13 @@ export const NewBusiness: FC = ({}) => {
           Create Business
         </button>
       </div>
-      <Image src={imageUrl} width="250" height="250" alt="test"></Image>
+      {/* <Image src={imageUrl} width="250" height="250" alt="test"></Image> */}
     </div>
   );
 };
 export default NewBusiness;
+
+
+
+
+
