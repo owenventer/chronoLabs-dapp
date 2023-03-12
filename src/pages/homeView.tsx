@@ -5,6 +5,7 @@ import Image from "next/image";
 import CompanyCard from "components/CompanyCard";
 import { userData } from "../contexts/UserDataContext";
 import { useContext } from "react";
+import CompanyList from "components/companyList";
 
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
@@ -31,9 +32,8 @@ export const HomeView: FC = ({}) => {
                 height={250}
               />
 
-              <div className="grid sm:grid-cols-1 m-1 md:grid-cols-2">
-                <CompanyCard companyName={nfts[0].companyName} />
-                <CompanyCard companyName={"solStoreIt"} />
+              <div>
+                <CompanyList nfts={nfts}/>
                 {nfts.length}
               </div>
             </div>
