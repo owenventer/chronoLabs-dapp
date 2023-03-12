@@ -1,26 +1,49 @@
 // Next, React
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState,useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import CompanyCard from "components/CompanyCard";
+import {userData} from "../contexts/UserDataContext"
+import { useRouter } from "next/router";
+
 
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import dynamic from "next/dynamic";
 
-export const HomeView: FC = ({}) => {
+export const SignIn: FC = ({}) => {
   const { publicKey, wallet } = useWallet();
   const { connection } = useConnection();
 
+  const WalletMultiButtonDynamic = dynamic(
+    async () => (await import('@solana/wallet-adapter-react-ui')).WalletMultiButton,
+    { ssr: false }
+  );
+  const router = useRouter();
+  const {nfts,setNFTs}=useContext(userData);
+
+  function getNFTs(){
+    setNFTs(prevNFTs=>[...prevNFTs,{
+    companyName: "solBeach",
+    logo: "Test",
+    numTasks:0,
+    tasks: "Test[]",
+    employeeName:"Test",
+    employeeType:"Test",
+    pay:"Test",
+    ssNum:"Test",
+    state:"Test",
+    country:"Test",
+    startDate:"Test",
+    employeeStatus:"Test",
+    }])
+    router.push("/homeView")
+  }
+
   return (
     <>
-      {publicKey && (
+      
         <>
           <div className="md:hero mx-auto p-5 m-10">
-            <Link href="/newBusiness">
-              <button className=" absolute top-20 right-10 shadow-lg bg-black bg-opacity-50 rounded text-gray-100 p-2 ">
-                New Business
-              </button>
-            </Link>
             <div className="md:hero-content flex flex-col  items-center shadow-lg bg-black text-neutral-content bg-opacity-50 rounded mt-6">
               <Image
                 src="/fullLogo.png"
@@ -29,15 +52,21 @@ export const HomeView: FC = ({}) => {
                 height={250}
               />
 
-              <div className="grid sm:grid-cols-1 m-1 md:grid-cols-2">
-                <CompanyCard companyName={"solBeach"} />
-                <CompanyCard companyName={"solStoreIt"} />
+              <div className="flex flex-col  items-center">
+              {publicKey && (
+               
+                <button className="bg-[#14F195] hover:hover:scale-105 text-black font-bold py-2 px-2 m-2 rounded" onClick={getNFTs}> Sign In</button>
+                
+              )}
+              {!publicKey && (
+                <WalletMultiButtonDynamic className="btn-ghost btn-sm rounded-btn md:text-lg sm:text-xs " />
+              )}
               </div>
             </div>
           </div>
         </>
-      )}
+      
     </>
   );
 };
-export default HomeView;
+export default SignIn;

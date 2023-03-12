@@ -14,7 +14,13 @@ import {
   NftWithToken,
 } from "@metaplex-foundation/js";
 import * as fs from "fs";
-import { Connection, clusterApiUrl, Keypair, Signer, PublicKey } from "@solana/web3.js";
+import {
+  Connection,
+  clusterApiUrl,
+  Keypair,
+  Signer,
+  PublicKey,
+} from "@solana/web3.js";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 
 export const AddEmployee: FC = ({}) => {
@@ -64,15 +70,16 @@ export const AddEmployee: FC = ({}) => {
   const { publicKey, sendTransaction } = useWallet();
   const wallet = useWallet();
 
-
   //NFT information
   const nftData = {
     name: employeeName,
     symbol: employeeName[0] + employeeName[employeeName.length - 1],
-    description: "The NFT for " + employeeName + " In the company on ChronoLabs.",
+    description:
+      "The NFT for " + employeeName + " In the company on ChronoLabs.",
 
     sellerFeeBasisPoints: 0,
-    imageFile:"https://arweave.net/RXdY8D_qEEJis3s3DWAJ_OPWVhT6JS32W2wj3tS5W60",
+    imageFile:
+      "https://arweave.net/RXdY8D_qEEJis3s3DWAJ_OPWVhT6JS32W2wj3tS5W60",
     isCollection: true,
     collectionAuthority: wallet.publicKey,
   };
@@ -92,69 +99,69 @@ export const AddEmployee: FC = ({}) => {
       })
     );
 
-    async function uploadMetadata(
-      metaplex: Metaplex,
-      nftData: NftData
-    ): Promise<string> {
-      //get image buffer from user input
-  
-      // const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
-      // const buffer = Buffer.from(response.data, "utf-8");
-  
-      // // buffer to metaplex file (maybe error with Logo.png)
-      // const file = toMetaplexFile(buffer, nftData.imageFile);
-  
-      // upload image and get image uri
-      // const imageUri = await metaplex.storage().upload(file);
-      // console.log("Image URI:", imageUri);
-  
-      // upload metadata and get metadata uri (off chain metadata)
-      const { uri } = await metaplex.nfts().uploadMetadata({
-        name: nftData.name,
-        symbol: nftData.symbol,
-        description: nftData.description,
-        image: nftData.imageFile,
-        attributes: [
-          {
-            trait_type: "Employee Name",
-            value: employeeName,
-          },
-          {
-            trait_type: "Employee Type",
-            value: employeeType,
-          },
-          {
-            trait_type: "Pay",
-            value: employeePay,
-          },
-          {
-            trait_type: "Social Security #",
-            value: SSNum,
-          },
-          {
-            trait_type: "State",
-            value: state,
-          },
-          {
-            trait_type: "Country",
-            value: country,
-          },
-          {
-            trait_type: "Start Date",
-            value: startDate,
-          },
-          {
-            trait_type: "Employee Status",
-            value: employeeStatus,
-          },
-        ],
-      });
-  
-      console.log("Metadata Uri:", uri);
-      return uri;
-    }
+  async function uploadMetadata(
+    metaplex: Metaplex,
+    nftData: NftData
+  ): Promise<string> {
+    //get image buffer from user input
 
-      //helper function to create an NFT (collection NFT)
+    // const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
+    // const buffer = Buffer.from(response.data, "utf-8");
+
+    // // buffer to metaplex file (maybe error with Logo.png)
+    // const file = toMetaplexFile(buffer, nftData.imageFile);
+
+    // upload image and get image uri
+    // const imageUri = await metaplex.storage().upload(file);
+    // console.log("Image URI:", imageUri);
+
+    // upload metadata and get metadata uri (off chain metadata)
+    const { uri } = await metaplex.nfts().uploadMetadata({
+      name: nftData.name,
+      symbol: nftData.symbol,
+      description: nftData.description,
+      image: nftData.imageFile,
+      attributes: [
+        {
+          trait_type: "Employee Name",
+          value: employeeName,
+        },
+        {
+          trait_type: "Employee Type",
+          value: employeeType,
+        },
+        {
+          trait_type: "Pay",
+          value: employeePay,
+        },
+        {
+          trait_type: "Social Security #",
+          value: SSNum,
+        },
+        {
+          trait_type: "State",
+          value: state,
+        },
+        {
+          trait_type: "Country",
+          value: country,
+        },
+        {
+          trait_type: "Start Date",
+          value: startDate,
+        },
+        {
+          trait_type: "Employee Status",
+          value: employeeStatus,
+        },
+      ],
+    });
+
+    console.log("Metadata Uri:", uri);
+    return uri;
+  }
+
+  //helper function to create an NFT (collection NFT)
   async function createCollectionNFT(
     metaplex: Metaplex,
     uri: string,
@@ -201,7 +208,6 @@ export const AddEmployee: FC = ({}) => {
     // create an NFT using the helper function and the URI from the metadata
     const nft = await createCollectionNFT(metaplex, uri, nftData);
   }
-
 
   return (
     <div className="md:hero mx-auto p-5 m-10">
@@ -325,7 +331,10 @@ export const AddEmployee: FC = ({}) => {
           </div>
         </div>
 
-        <button className="bg-[#14F195] hover:hover:scale-105 text-black font-bold py-2 px-2 m-2 rounded" onClick={mintNFT}>
+        <button
+          className="bg-[#14F195] hover:hover:scale-105 text-black font-bold py-2 px-2 m-2 rounded"
+          onClick={mintNFT}
+        >
           Add Employee
         </button>
       </div>

@@ -1,0 +1,3 @@
+Todo list:
+- Add company Name to NFTs when creating new employee
+- Add "to" address when minting employee NFTs

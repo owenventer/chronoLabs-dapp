@@ -6,15 +6,14 @@ import { AppBar } from "../components/AppBar";
 import { ContentContainer } from "../components/ContentContainer";
 import Notifications from "../components/Notification";
 import SignInPage from "components/SignInPage";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { SendVersionedTransaction } from "../components/SendVersionedTransaction";
+import UserDataContext from "../contexts/UserDataContext";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 require("../styles/globals.css");
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
-  //const { publicKey, sendTransaction } = useWallet();
-  //console.log(publicKey);
+  // const wallet = useWallet();
+  // console.log("connected wallet: " + wallet.publicKey);
 
   return (
     <>
@@ -26,7 +25,11 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
         <div className="flex flex-col h-screen">
           <Notifications />
           <AppBar />
-          <ContentContainer>{<Component {...pageProps} />}</ContentContainer>
+          <ContentContainer>
+            <UserDataContext>
+            {<Component {...pageProps} />}
+            </UserDataContext>
+          </ContentContainer>
         </div>
       </ContextProvider>
     </>
