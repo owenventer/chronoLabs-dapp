@@ -98,13 +98,9 @@ export const NewBusiness: FC = ({}) => {
       })
     );
 
-  //Manage the button click
-  function showValues() {
-    console.log(businessName + country + state + businessType + EINNumber);
-  }
 
   //helper function for uploading assets
-  async function uploadMetadata(
+  async function uploadCollectionMetadata(
     metaplex: Metaplex,
     nftData: NftData
   ): Promise<string> {
@@ -146,6 +142,10 @@ export const NewBusiness: FC = ({}) => {
         {
           trait_type: "EIN Number",
           value: EINNumber,
+        },
+        {
+          trait_type: "NFT Type",
+          value: "Collection NFT",
         },
       ],
     });
@@ -193,16 +193,19 @@ export const NewBusiness: FC = ({}) => {
 
     return nft;
   }
+  //create a normal employee NFT
+  
 
   async function mintNFT() {
     // upload the NFT data and get the URI for the metadata
-    const uri = await uploadMetadata(metaplex, nftData);
+    const uri = await uploadCollectionMetadata(metaplex, nftData);
 
     // create an NFT using the helper function and the URI from the metadata
     const nft = await createCollectionNFT(metaplex, uri, nftData);
   }
 
   return (
+    <>
     <div className="md:hero mx-auto p-5 m-10">
       <Link href="/">
         <button className=" absolute top-20 left-10 shadow-lg bg-black text-neutral-content bg-opacity-50 rounded py-2 px-2 ">
@@ -340,6 +343,8 @@ export const NewBusiness: FC = ({}) => {
       </div>
       {/* <Image src={imageUrl} width="250" height="250" alt="test"></Image> */}
     </div>
+    
+    </>
   );
 };
 export default NewBusiness;

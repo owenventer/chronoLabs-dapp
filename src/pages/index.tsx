@@ -79,11 +79,33 @@ export const SignIn: FC = ({}) => {
             includeOffChain: true,
         });
         console.log("metadata: ", data);
+        
         data.forEach((nft,i)=>{
           
-          if(data[i]["onChainMetadata"]["metadata"]["data"]["creators"][0]["address"]=="B5N3Q9Fw3zijTA3ih87cNDbst7bJ7AfTri7XJPX9wTNg" && data[i]["onChainMetadata"]["metadata"]["data"]["creators"][0]["verified"]==true){
+          if(data[i]["onChainMetadata"]["metadata"]["data"]["creators"][0]["address"]=="B5N3Q9Fw3zijTA3ih87cNDbst7bJ7AfTri7XJPX9wTNg" 
+          && data[i]["onChainMetadata"]["metadata"]["data"]["creators"][0]["verified"]==true 
+          //&& data[i]
+          ){
           companyList=data[i]["account"]
           console.log(data[i]["account"])
+          //add to the NFT List
+          setNFTs(prevNFTs=>[...prevNFTs,{
+            companyName: "solBeach",
+            logo: "https://arweave.net/RXdY8D_qEEJis3s3DWAJ_OPWVhT6JS32W2wj3tS5W60",
+            numTasks:0,
+            tasks: "Test[]",
+            employeeName:"Test",
+            employeeType:"Test",
+            pay:"Test",
+            ssNum:"Test",
+            state:"Test",
+            country:"Test",
+            startDate:"Test",
+            employeeStatus:"Test",
+            isCollection:true,
+            }])
+
+
           }
         })
       };
@@ -94,20 +116,7 @@ export const SignIn: FC = ({}) => {
 
 
 
-    setNFTs(prevNFTs=>[...prevNFTs,{
-    companyName: "solBeach",
-    logo: "Test",
-    numTasks:0,
-    tasks: "Test[]",
-    employeeName:"Test",
-    employeeType:"Test",
-    pay:"Test",
-    ssNum:"Test",
-    state:"Test",
-    country:"Test",
-    startDate:"Test",
-    employeeStatus:"Test",
-    }])
+    
     router.push("/homeView")
   }
 

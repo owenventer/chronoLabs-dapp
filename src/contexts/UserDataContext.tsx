@@ -15,6 +15,7 @@ type nftType={
     country:string;
     startDate:string;
     employeeStatus:string;
+    isCollection:boolean;
 
 }
 
