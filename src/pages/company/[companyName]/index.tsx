@@ -15,7 +15,7 @@ export function EmployeeDashView({}) {
 
   //Link for company image
   const router = useRouter();
-  const collectionID = router.query.collectionID;
+  const collectionID = router.query.companyName;
   console.log(collectionID);
   var imgLink = "/fullLogo.png";
 

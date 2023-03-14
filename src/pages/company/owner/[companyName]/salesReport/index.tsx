@@ -15,7 +15,7 @@ export function SalesReport({}) {
   //Link for company image
   const { nfts } = useContext(userData);
   const router = useRouter();
-  const collectionID = router.query.collectionID;
+  const collectionID = router.query.companyName;
   console.log(collectionID);
   var imgLink = "/fullLogo.png";
 

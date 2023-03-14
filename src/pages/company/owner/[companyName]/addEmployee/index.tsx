@@ -28,16 +28,19 @@ export const AddEmployee: FC = ({}) => {
   //Link for company image
   const { nfts } = useContext(userData);
   const router = useRouter();
-  const collectionID = router.query.collectionID;
-  console.log(collectionID);
+  const collectionID = router.query.companyName;
+  // console.log(collectionID);
   var imgLink = "/fullLogo.png";
+  var companyName="";
 
   const nftObject = nfts.find((nft) => nft.collectionID === collectionID);
 
   if (nftObject) {
     const logo = nftObject.logo;
-    console.log(logo); // prints the logo of the object with the given collection ID
+    const cName=nftObject.companyName;
+    //console.log(logo); // prints the logo of the object with the given collection ID
     imgLink = "" + logo;
+    companyName=cName;
   } else {
     console.log("Object not found");
   }
@@ -86,20 +89,29 @@ export const AddEmployee: FC = ({}) => {
     name: employeeName,
     symbol: employeeName[0] + employeeName[employeeName.length - 1],
     description:
-      "The NFT for " + employeeName + " In the company on ChronoLabs.",
+      "The NFT for employee: " + employeeName + ". Powered by ChronoLabs.",
 
     sellerFeeBasisPoints: 0,
-    imageFile:
-      "https://arweave.net/RXdY8D_qEEJis3s3DWAJ_OPWVhT6JS32W2wj3tS5W60",
-    isCollection: true,
-    collectionAuthority: wallet.publicKey,
+    imageFile:imgLink,
+    
   };
 
   //Solana connection
   const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
 
-  //Metaplex Set up(should this be us or the user?)
-  const metaplex = Metaplex.make(connection)
+  //Metaplex Set up(User)
+  const metaplexAdmin = Metaplex.make(connection)
+    .use(keypairIdentity(Keypair.fromSecretKey(Uint8Array.from(CLPrivateKey))))
+    .use(
+      bundlrStorage({
+        //mainnet right now, maybe devnet?
+        address: "https://node1.bundlr.network",
+        providerUrl: process.env.NEXT_PUBLIC_RPC,
+        timeout: 60000,
+      })
+    );
+      //admin metaplex instance
+    const metaplex = Metaplex.make(connection)
     .use(walletAdapterIdentity(wallet))
     .use(
       bundlrStorage({
@@ -114,25 +126,17 @@ export const AddEmployee: FC = ({}) => {
     metaplex: Metaplex,
     nftData: NftData
   ): Promise<string> {
-    //get image buffer from user input
-
-    // const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
-    // const buffer = Buffer.from(response.data, "utf-8");
-
-    // // buffer to metaplex file (maybe error with Logo.png)
-    // const file = toMetaplexFile(buffer, nftData.imageFile);
-
-    // upload image and get image uri
-    // const imageUri = await metaplex.storage().upload(file);
-    // console.log("Image URI:", imageUri);
-
-    // upload metadata and get metadata uri (off chain metadata)
+   
     const { uri } = await metaplex.nfts().uploadMetadata({
       name: nftData.name,
       symbol: nftData.symbol,
       description: nftData.description,
       image: nftData.imageFile,
       attributes: [
+        {
+          trait_type: "Company Name",
+          value: companyName,
+        },
         {
           trait_type: "Employee Name",
           value: employeeName,
@@ -168,7 +172,7 @@ export const AddEmployee: FC = ({}) => {
       ],
     });
 
-    console.log("Metadata Uri:", uri);
+    // console.log("Metadata Uri:", uri);
     return uri;
   }
 
@@ -200,14 +204,25 @@ export const AddEmployee: FC = ({}) => {
           },
         ],
         symbol: nftData.symbol,
-        isCollection: true,
+        collection: new PublicKey(collectionID),
+        collectionAuthority:{
+           publicKey: CLPubKey,
+           secretKey: Uint8Array.from(CLPrivateKey),
+        }
+        
       },
       { commitment: "finalized" }
     );
-
     console.log(
       `Collection Mint: https://solscan.io/token/${nft.address.toString()}`
     );
+    // await metaplexAdmin.nfts().verifyCollection({
+    //   mintAddress:new PublicKey(nft.address),
+    //   collectionMintAddress: new PublicKey(collectionID),
+    //   isSizedCollection: true,
+      
+    // },{payer:wallet});
+   
 
     return nft;
   }

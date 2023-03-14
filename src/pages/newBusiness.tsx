@@ -185,7 +185,13 @@ export const NewBusiness: FC = ({}) => {
           },
         ],
         symbol: nftData.symbol,
+        updateAuthority:{
+          //B5N3Q9Fw3zijTA3ih87cNDbst7bJ7AfTri7XJPX9wTNg
+          publicKey: CLPubKey,
+          secretKey: Uint8Array.from(CLPrivateKey),
+        },
         isCollection: true,
+        collectionIsSized:true,
       },
       { commitment: "finalized" }
     );

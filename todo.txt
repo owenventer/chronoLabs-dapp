@@ -1,29 +1,9 @@
 Todo list:
-- Add company Name to NFTs when creating new employee
+DONE: - Add company Name to NFTs when creating new employee
 - Add "to" address when minting employee NFTs
--Add owner variable 
+ -Add owner variable 
 
 Next:
-Add the company ID to nfts so we can get the image URL   
-add collection ID to creating a new employee
+DONE: Add the company ID to nfts so we can get the image URL   
+DONE: add collection ID to creating a new employee 
 
-
-import { userData } from "../../../../contexts/UserDataContext";
-
-
-//Link for company image
-  const { nfts } = useContext(userData);
-  const router = useRouter();
-  const collectionID = router.query.collectionID;
-  console.log(collectionID);
-  var imgLink = "/fullLogo.png";
-
-  const nftObject = nfts.find((nft) => nft.collectionID === collectionID);
-
-if (nftObject) {
-  const logo = nftObject.logo;
-  console.log(logo); // prints the logo of the object with the given collection ID
-  imgLink=""+logo
-} else {
-  console.log("Object not found");
-}
