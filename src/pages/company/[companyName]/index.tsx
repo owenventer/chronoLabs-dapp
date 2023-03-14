@@ -3,6 +3,7 @@ import { FC, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { PerformAction } from "components/performAction";
 
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
@@ -50,9 +51,7 @@ export function EmployeeDashView({}) {
         />
         {/* Button div */}
         <div className="grid sm:grid-cols-1 m-1 md:grid-cols-2">
-          <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-3/4 m-2 mx-10 rounded">
-            Clock In
-          </button>
+          <PerformAction message={'Clock In'}></PerformAction> 
           <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-3/4 m-2 mx-10 rounded">
             {" "}
             Clock Out

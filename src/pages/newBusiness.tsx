@@ -44,8 +44,6 @@ interface CollectionNftData {
   collectionAuthority: Signer;
 }
 
-
-
 export const NewBusiness: FC = ({}) => {
   // NFT attribute variables
   const [businessName, setBusinessName] = useState("");
@@ -185,13 +183,13 @@ export const NewBusiness: FC = ({}) => {
           },
         ],
         symbol: nftData.symbol,
-        updateAuthority:{
+        updateAuthority: {
           //B5N3Q9Fw3zijTA3ih87cNDbst7bJ7AfTri7XJPX9wTNg
           publicKey: CLPubKey,
           secretKey: Uint8Array.from(CLPrivateKey),
         },
         isCollection: true,
-        collectionIsSized:true,
+        collectionIsSized: true,
       },
       { commitment: "finalized" }
     );

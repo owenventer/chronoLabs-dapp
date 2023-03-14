@@ -31,16 +31,16 @@ export const AddEmployee: FC = ({}) => {
   const collectionID = router.query.companyName;
   // console.log(collectionID);
   var imgLink = "/fullLogo.png";
-  var companyName="";
+  var companyName = "";
 
   const nftObject = nfts.find((nft) => nft.collectionID === collectionID);
 
   if (nftObject) {
     const logo = nftObject.logo;
-    const cName=nftObject.companyName;
+    const cName = nftObject.companyName;
     //console.log(logo); // prints the logo of the object with the given collection ID
     imgLink = "" + logo;
-    companyName=cName;
+    companyName = cName;
   } else {
     console.log("Object not found");
   }
@@ -92,26 +92,14 @@ export const AddEmployee: FC = ({}) => {
       "The NFT for employee: " + employeeName + ". Powered by ChronoLabs.",
 
     sellerFeeBasisPoints: 0,
-    imageFile:imgLink,
-    
+    imageFile: imgLink,
   };
 
   //Solana connection
   const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
 
-  //Metaplex Set up(User)
-  const metaplexAdmin = Metaplex.make(connection)
-    .use(keypairIdentity(Keypair.fromSecretKey(Uint8Array.from(CLPrivateKey))))
-    .use(
-      bundlrStorage({
-        //mainnet right now, maybe devnet?
-        address: "https://node1.bundlr.network",
-        providerUrl: process.env.NEXT_PUBLIC_RPC,
-        timeout: 60000,
-      })
-    );
-      //admin metaplex instance
-    const metaplex = Metaplex.make(connection)
+  //admin metaplex instance
+  const metaplex = Metaplex.make(connection)
     .use(walletAdapterIdentity(wallet))
     .use(
       bundlrStorage({
@@ -126,7 +114,6 @@ export const AddEmployee: FC = ({}) => {
     metaplex: Metaplex,
     nftData: NftData
   ): Promise<string> {
-   
     const { uri } = await metaplex.nfts().uploadMetadata({
       name: nftData.name,
       symbol: nftData.symbol,
@@ -205,24 +192,16 @@ export const AddEmployee: FC = ({}) => {
         ],
         symbol: nftData.symbol,
         collection: new PublicKey(collectionID),
-        collectionAuthority:{
-           publicKey: CLPubKey,
-           secretKey: Uint8Array.from(CLPrivateKey),
-        }
-        
+        collectionAuthority: {
+          publicKey: CLPubKey,
+          secretKey: Uint8Array.from(CLPrivateKey),
+        },
       },
       { commitment: "finalized" }
     );
     console.log(
       `Collection Mint: https://solscan.io/token/${nft.address.toString()}`
     );
-    // await metaplexAdmin.nfts().verifyCollection({
-    //   mintAddress:new PublicKey(nft.address),
-    //   collectionMintAddress: new PublicKey(collectionID),
-    //   isSizedCollection: true,
-      
-    // },{payer:wallet});
-   
 
     return nft;
   }
