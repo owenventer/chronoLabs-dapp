@@ -21,7 +21,9 @@ export const AppBar: React.FC = () => {
       <div className="navbar flex h-10 flex-row md:mb-2 shadow-lg bg-black text-neutral-content bg-opacity-50">
         <div className="navbar-start align-items-center">
           <div className="sm:inline w-22 h-22 md:p-2 ml-10">
+            <Link href={'/'}>
             <Image src='/miniLogo.png' alt='chronoLabsLogo' width={50} height={50}></Image>
+            </Link>
           </div>
           
         </div>
