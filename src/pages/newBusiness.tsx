@@ -1,7 +1,7 @@
 // Next, React
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+const { default: NextImage } = require("next/image");
 import axios from "axios";
 import {
   Metaplex,
@@ -44,6 +44,8 @@ interface CollectionNftData {
   collectionAuthority: Signer;
 }
 
+
+
 export const NewBusiness: FC = ({}) => {
   // NFT attribute variables
   const [businessName, setBusinessName] = useState("");
@@ -53,11 +55,13 @@ export const NewBusiness: FC = ({}) => {
   const [EINNumber, setEINNumber] = useState("");
   //handling the image
   const [imageUrl, setImageUrl] = useState("");
+  const canvasRef = useRef(null);
   function processImage(event) {
     const imgFile = event.target.files[0];
     const imgUrl = URL.createObjectURL(imgFile);
     setImageUrl(imgUrl);
   }
+
   //managing wallets and keys
   const CLPrivateKey = JSON.parse(
     process.env.NEXT_PUBLIC_ChronoPK ?? ""
@@ -97,7 +101,6 @@ export const NewBusiness: FC = ({}) => {
         timeout: 60000,
       })
     );
-
 
   //helper function for uploading assets
   async function uploadCollectionMetadata(
@@ -194,7 +197,6 @@ export const NewBusiness: FC = ({}) => {
     return nft;
   }
   //create a normal employee NFT
-  
 
   async function mintNFT() {
     // upload the NFT data and get the URI for the metadata
@@ -204,152 +206,149 @@ export const NewBusiness: FC = ({}) => {
     const nft = await createCollectionNFT(metaplex, uri, nftData);
   }
 
+  //for image
+
   return (
     <>
-    <div className="md:hero mx-auto p-5 m-10">
-      <Link href="/">
-        <button className=" absolute top-20 left-10 shadow-lg bg-black text-neutral-content bg-opacity-50 rounded py-2 px-2 ">
-          Back
-        </button>
-      </Link>
-      <div className="md:hero-content flex flex-col  items-center shadow-lg bg-black text-neutral-content bg-opacity-50 rounded mt-6">
-        <Image
-          src="/fullLogo.png"
-          alt="chronoLabsMainLogo"
-          width={250}
-          height={250}
-        />
+      <div className="md:hero mx-auto p-5 m-10">
+        <Link href="/">
+          <button className=" absolute top-20 left-10 shadow-lg bg-black text-neutral-content bg-opacity-50 rounded py-2 px-2 ">
+            Back
+          </button>
+        </Link>
+        <div className="md:hero-content flex flex-col  items-center shadow-lg bg-black text-neutral-content bg-opacity-50 rounded mt-6">
+          <NextImage
+            src="/fullLogo.png"
+            alt="chronoLabsMainLogo"
+            width={250}
+            height={250}
+          />
 
-        <div className="grid sm:grid-cols-1 m-1 md:grid-cols-3">
-          <div className="m-2">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Business Name
-            </label>
-            <input
-              type="text"
-              id="businessName"
-              className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
-              placeholder="Magic Eden"
-              required
-              onChange={(event) => setBusinessName(event.target.value)}
-            />
-          </div>
-          <div className="m-2">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Country
-            </label>
-            <input
-              type="text"
-              id="country"
-              className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
-              placeholder="USA"
-              required
-              onChange={(event) => setCountry(event.target.value)}
-            />
-          </div>
-          <div className="m-2">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              State
-            </label>
-            <input
-              type="text"
-              id="state"
-              className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
-              placeholder="CA"
-              required
-              onChange={(event) => setState(event.target.value)}
-            />
-          </div>
-          <div className="m-2">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Business Type
-            </label>
-            <input
-              type="text"
-              id="businessType"
-              className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
-              placeholder="NFT Marketplace"
-              required
-              onChange={(event) => setBusinessType(event.target.value)}
-            />
-          </div>
-          <div className="m-2">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              EIN Number
-            </label>
-            <input
-              type="text"
-              id="EINNumber"
-              className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
-              placeholder="xxx.xxx.xxx"
-              required
-              onChange={(event) => setEINNumber(event.target.value)}
-            />
-          </div>
-          <div className="m-2">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Upload Logo
-            </label>
-            <div className="flex items-center justify-center w-full">
-              <label className="flex rounded-lg flex-col w-full h-10 border-2 border bg-[#744f90] border-gray-600">
-                <div className="flex flex-col items-center justify-center mx-auto">
-                  {imageUrl ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="2"
-                      stroke="currentColor"
-                      className="pt-1 w-8 h-8 text-[#14F195] group-hover:text-gray-600"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="pt-1 w-8 h-8 text-gray-400 group-hover:text-gray-600"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
-                </div>
-                <input
-                  type="file"
-                  className="opacity-0 w-10"
-                  accept="image/*"
-                  onChange={processImage}
-                />
+          <div className="grid sm:grid-cols-1 m-1 md:grid-cols-3">
+            <div className="m-2">
+              <label className="block mb-2 text-sm font-medium text-white">
+                Business Name
               </label>
+              <input
+                type="text"
+                id="businessName"
+                className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
+                placeholder="Magic Eden"
+                required
+                onChange={(event) => setBusinessName(event.target.value)}
+              />
+            </div>
+            <div className="m-2">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Country
+              </label>
+              <input
+                type="text"
+                id="country"
+                className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
+                placeholder="USA"
+                required
+                onChange={(event) => setCountry(event.target.value)}
+              />
+            </div>
+            <div className="m-2">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                State
+              </label>
+              <input
+                type="text"
+                id="state"
+                className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
+                placeholder="CA"
+                required
+                onChange={(event) => setState(event.target.value)}
+              />
+            </div>
+            <div className="m-2">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Business Type
+              </label>
+              <input
+                type="text"
+                id="businessType"
+                className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
+                placeholder="NFT Marketplace"
+                required
+                onChange={(event) => setBusinessType(event.target.value)}
+              />
+            </div>
+            <div className="m-2">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                EIN Number
+              </label>
+              <input
+                type="text"
+                id="EINNumber"
+                className=" border text-sm rounded-lg block w-full p-2.5 bg-[#744f90] border-gray-600  text-white"
+                placeholder="xxx.xxx.xxx"
+                required
+                onChange={(event) => setEINNumber(event.target.value)}
+              />
+            </div>
+            <div className="m-2">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Upload Logo
+              </label>
+              <div className="flex items-center justify-center w-full">
+                <label className="flex rounded-lg flex-col w-full h-10 border-2  bg-[#744f90] border-gray-600">
+                  <div className="flex flex-col items-center justify-center mx-auto">
+                    {imageUrl ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="2"
+                        stroke="currentColor"
+                        className="pt-1 w-8 h-8 text-[#14F195] group-hover:text-gray-600"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="pt-1 w-8 h-8 text-gray-400 group-hover:text-gray-600"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    className="opacity-0 w-10"
+                    accept="image/*"
+                    onChange={processImage}
+                  />
+                </label>
+              </div>
             </div>
           </div>
-        </div>
 
-        <button
-          onClick={mintNFT}
-          className="bg-[#14F195] hover:hover:scale-105 text-black font-bold py-2 px-2 m-2 rounded"
-        >
-          Create Business
-        </button>
+          <button
+            onClick={mintNFT}
+            className="bg-[#14F195] hover:hover:scale-105 text-black font-bold py-2 px-2 m-2 rounded"
+          >
+            Create Business
+          </button>
+        </div>
       </div>
-      {/* <Image src={imageUrl} width="250" height="250" alt="test"></Image> */}
-    </div>
-    
+
+      {/* <NextImage src={imageUrl} width="250" height="250" alt="test"></NextImage> */}
     </>
   );
 };
 export default NewBusiness;
-
-
-
-
-

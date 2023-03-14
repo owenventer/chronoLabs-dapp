@@ -9,12 +9,13 @@ interface Props{
 }
 
  export const CompanyCard: React.FC<Props> = ({companyName, isOwner, imageURI}) => {
-  const imgLink = "/" + companyName + "Logo.png";
+  //const imgLink = "/" + companyName + "Logo.png";
   
   
   return (
     <div className="flex flex-col items-center m-4 border-2 rounded border-[#b62fff3d] md:border-hidden">
       <Image src={imageURI} alt="chronoLabsMainLogo" width={250} height={250} />
+      <p className=" p-1 text-xl font-medium text-white">{companyName}</p>
 
       {isOwner ? (
         <Link href={`company/${companyName}`}>

@@ -82,28 +82,56 @@ export const SignIn: FC = ({}) => {
         
         data.forEach((nft,i)=>{
           
+          
           if(data[i]["onChainMetadata"]["metadata"]["data"]["creators"][0]["address"]=="B5N3Q9Fw3zijTA3ih87cNDbst7bJ7AfTri7XJPX9wTNg" 
           && data[i]["onChainMetadata"]["metadata"]["data"]["creators"][0]["verified"]==true 
           //&& data[i]
           ){
           companyList=data[i]["account"]
           console.log(data[i]["account"])
+          const offChainAttributes=data[i]["offChainMetadata"]["metadata"]["attributes"]
+          const attributes = offChainAttributes.map(item => ({ type: item.trait_type, value: item.value }));
+          console.log(attributes)
+          //see if there is a collection attribute
+          const attributeExists = attributes.some(item => item.type === "EIN Number");
+          console.log("CHECK IF COLLECTION:"+attributeExists)
           //add to the NFT List
-          setNFTs(prevNFTs=>[...prevNFTs,{
-            companyName: "solBeach",
-            logo: "https://arweave.net/RXdY8D_qEEJis3s3DWAJ_OPWVhT6JS32W2wj3tS5W60",
-            numTasks:0,
-            tasks: "Test[]",
-            employeeName:"Test",
-            employeeType:"Test",
-            pay:"Test",
-            ssNum:"Test",
-            state:"Test",
-            country:"Test",
-            startDate:"Test",
-            employeeStatus:"Test",
-            isCollection:true,
-            }])
+            if(attributeExists){
+              setNFTs(prevNFTs=>[...prevNFTs,{
+                //change when added company name
+                companyName:offChainAttributes[0]["value"],
+                logo: data[i]["offChainMetadata"]["metadata"]["image"],
+                numTasks:0,
+                tasks: "Test[]",
+                employeeName:offChainAttributes[0]["value"],
+                employeeType:"test",
+                pay:"test",
+                ssNum:"test",
+                state:"test",
+                country:"test",
+                startDate:"test",
+                employeeStatus:"test",
+                isCollection:true,
+                }])
+            }else{
+              setNFTs(prevNFTs=>[...prevNFTs,{
+                //change when added company name
+                companyName:offChainAttributes[0]["value"],
+                logo: data[i]["offChainMetadata"]["metadata"]["image"],
+                numTasks:0,
+                tasks: "Test[]",
+                employeeName:offChainAttributes[0]["value"],
+                employeeType:"test",
+                pay:"test",
+                ssNum:"test",
+                state:"test",
+                country:"test",
+                startDate:"test",
+                employeeStatus:"test",
+                isCollection:true,
+                }])
+            }
+          
 
 
           }
