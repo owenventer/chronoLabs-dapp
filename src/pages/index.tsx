@@ -114,6 +114,7 @@ export const SignIn: FC = ({}) => {
                 isCollection:true,
                 businessType:attributes.find(item => item.type === "Business Type")?.value,
                 einNumber:attributes.find(item => item.type === "EIN Number")?.value,
+                collectionID:data[i]["account"]
                 }])
             }else{
               setNFTs(prevNFTs=>[...prevNFTs,{
@@ -133,6 +134,8 @@ export const SignIn: FC = ({}) => {
                 isCollection:false,
                 businessType:null,
                 einNumber:null,
+                collectionID:"test",
+                //data[i]["onChainMetadata"]["metadata"]["collection"]["key"]
                 }])
             }
           

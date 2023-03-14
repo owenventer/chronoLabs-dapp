@@ -18,6 +18,7 @@ type nftType={
     isCollection:boolean;
     businessType:string;
     einNumber:string;
+    collectionID:string;
 
 }
 

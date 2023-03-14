@@ -2,7 +2,7 @@
 import { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import CompanyCard from "components/CompanyCard";
+//import CompanyCard from "components/CompanyCard";
 import { userData } from "../contexts/UserDataContext";
 import { useContext } from "react";
 import CompanyList from "components/companyList";
@@ -24,7 +24,7 @@ export const HomeView: FC = ({}) => {
                 New Business
               </button>
             </Link>
-            <div className="md:hero-content flex flex-col  items-center shadow-lg bg-black text-neutral-content bg-opacity-50 rounded mt-6">
+            <div className="md:hero-content flex flex-col  items-center shadow-lg bg-black text-neutral-content bg-opacity-50 rounded mt-3">
               <Image
                 src="/fullLogo.png"
                 alt="chronoLabsMainLogo"
@@ -34,7 +34,6 @@ export const HomeView: FC = ({}) => {
 
               <div>
                 <CompanyList nfts={nfts}/>
-                {nfts.length}
               </div>
             </div>
           </div>

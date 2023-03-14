@@ -211,7 +211,7 @@ export const NewBusiness: FC = ({}) => {
   return (
     <>
       <div className="md:hero mx-auto p-5 m-10">
-        <Link href="/">
+        <Link href="/homeView">
           <button className=" absolute top-20 left-10 shadow-lg bg-black text-neutral-content bg-opacity-50 rounded py-2 px-2 ">
             Back
           </button>

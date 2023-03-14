@@ -4,7 +4,7 @@ import {CompanyCard} from './CompanyCard';
 const CompanyList=({nfts})=>{
 
     const cardArray= nfts.map((user,i)=>{
-            return(<CompanyCard companyName={nfts[i].companyName} isOwner={nfts[i].isCollection} imageURI={nfts[i].logo} key={i} />);
+            return(<CompanyCard collectionID={nfts[i].collectionID} companyName={nfts[i].companyName} isOwner={nfts[i].isCollection} imageURI={nfts[i].logo} key={i} />);
         })
 
         return(

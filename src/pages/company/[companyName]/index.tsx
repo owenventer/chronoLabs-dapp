@@ -1,28 +1,41 @@
 // Next, React
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import { userData } from "../../../contexts/UserDataContext";
 
 export function EmployeeDashView({}) {
   const wallet = useWallet();
   const { connection } = useConnection();
+  const { nfts } = useContext(userData);
 
   //Link for company image
   const router = useRouter();
-  const companyName = router.query.companyName;
-  console.log(companyName);
-  const imgLink = "/" + companyName + "Logo.png";
+  const collectionID = router.query.collectionID;
+  console.log(collectionID);
+  var imgLink = "/fullLogo.png";
+
+  const nftObject = nfts.find((nft) => nft.collectionID === collectionID);
+
+  if (nftObject) {
+    const logo = nftObject.logo;
+    console.log(logo); // prints the logo of the object with the given collection ID
+    imgLink = "" + logo;
+  } else {
+    console.log("Object not found");
+  }
+
   return (
     <div className="md:hero mx-auto m-10 p-5">
       {/* navigation buttons in top corners  */}
       <button className=" absolute top-20 right-10 shadow-lg bg-black bg-opacity-50 rounded text-gray-100 py-2 px-2 ">
         My Profile
       </button>
-      <Link href="/">
+      <Link href="/homeView">
         <button className=" absolute top-20 left-10 shadow-lg bg-black bg-opacity-50 rounded text-gray-100 py-2 px-2 ">
           Back
         </button>{" "}
@@ -56,7 +69,7 @@ export function EmployeeDashView({}) {
             {" "}
             Back at Restaurant
           </button>
-          <Link href={`${companyName}/POS`}>
+          <Link href={`${collectionID}/POS`}>
             <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-3/4 m-2 mx-10 rounded">
               {" "}
               POS Terminal
