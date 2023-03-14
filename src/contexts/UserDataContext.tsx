@@ -16,6 +16,8 @@ type nftType={
     startDate:string;
     employeeStatus:string;
     isCollection:boolean;
+    businessType:string;
+    einNumber:string;
 
 }
 
