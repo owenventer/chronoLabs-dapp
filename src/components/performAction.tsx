@@ -5,9 +5,12 @@ import {
   PublicKey,
   sendAndConfirmTransaction,
   SystemProgram,
+  
   Transaction,
   TransactionInstruction,
+  TransactionMessage,
   TransactionSignature,
+  VersionedTransaction,
 } from "@solana/web3.js";
 import { FC, useCallback } from "react";
 import { notify } from "../utils/notifications";
@@ -37,79 +40,89 @@ export const PerformAction: FC<props> = ({ message }) => {
       console.log("error", `Send Transaction: Wallet not connected!`);
       return;
     }
-    //useMemo
-    //  Create Solana Transaction
-    let tx = new Transaction();
-    //Add Memo Instruction
-    await tx.add(
-      new TransactionInstruction({
-        keys: [
-          { pubkey: adminKeypair.publicKey, isSigner: true, isWritable: false }
-        ],
-        data: Buffer.from(message, "utf-8"),
-        programId: new PublicKey("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"),
-      })
-    );
-    //Send Transaction
-    // tx.feePayer = wallet.publicKey;
-    let result = await sendAndConfirmTransaction(connection, tx, [adminKeypair]);
-    // result = await wallet.sendTransaction(tx, connection);
-    // Log Tx URL
-    console.log(
-      "complete: ",
-      `https://explorer.solana.com/tx/${result}?cluster=devnet`
-    );
-    return result;
+    // //useMemo
+    // //get latest blockhash
+    // const blockhashResponse = await connection.getLatestBlockhashAndContext('finalized');
+    // const lastValidHeight = blockhashResponse.value.lastValidBlockHeight; 
+    // //  Create Solana Transaction
+    // let tx = new Transaction(blockhash:,);
+    // //Add Memo Instruction
+    // await tx.add(
+    //   new TransactionInstruction({
+    //     keys: [
+    //       { pubkey: adminKeypair.publicKey, isSigner: true, isWritable: true },
+    //       { pubkey: wallet.publicKey, isSigner: true, isWritable: true }
+    //     ],
+    //     data: Buffer.from(message, "utf-8"),
+    //     programId: new PublicKey("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"),
+    //   })
+    // );
+    // //Send Transaction
+    // // tx.feePayer = wallet.publicKey;
+    // const {
+    //     context: { slot: minContextSlot },
+    //     value: { blockhash, lastValidBlockHeight }
+    // } = await connection.getLatestBlockhashAndContext();
+    // const trans=await wallet.signTransaction(tx);
+    // const result = await sendAndConfirmTransaction(connection, trans, [adminKeypair]);
+    
+    // // Log Tx URL
+    // console.log(
+    //   "complete: ",
+    //   `https://explorer.solana.com/tx/${result}?cluster=devnet`
+    // );
+    // console.log(
+    //     "IDK wtf the second one is: ",
+    //     `https://explorer.solana.com/tx/${trans}?cluster=devnet`
+    //   );
+    // return result;
 
-    let signature: TransactionSignature = "";
-    try {
-      // Create instructions to send, in this case a simple transfer
-      const instructions = [
-        SystemProgram.transfer({
-          fromPubkey: publicKey,
-          toPubkey: Keypair.generate().publicKey,
-          lamports: 1_000_000,
-        }),
-      ];
+    let signature: TransactionSignature = '';
+        try {
 
-      // Get the lates block hash to use on our transaction and confirmation
-      let latestBlockhash = await connection.getLatestBlockhash();
+            // Create instructions to send, in this case a simple transfer
+            const instructions = [
+                new TransactionInstruction({
+                         keys: [
+                        //    { pubkey: adminKeypair.publicKey, isSigner: true, isWritable: true },
+                           { pubkey: wallet.publicKey, isSigner: true, isWritable: true }
+                         ],
+                         data: Buffer.from(message, "utf-8"),
+                         programId: new PublicKey("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"),
+                       })
+            ];
 
-      // Create a new TransactionMessage with version and compile it to legacy
-      const messageLegacy = new TransactionMessage({
-        payerKey: publicKey,
-        recentBlockhash: latestBlockhash.blockhash,
-        instructions,
-      }).compileToLegacyMessage();
+            // Get the lates block hash to use on our transaction and confirmation
+            let latestBlockhash = await connection.getLatestBlockhash()
 
-      // Create a new VersionedTransacction which supports legacy and v0
-      const transation = new VersionedTransaction(messageLegacy);
+            // Create a new TransactionMessage with version and compile it to legacy
+            const messageLegacy = new TransactionMessage({
+                payerKey: publicKey,
+                recentBlockhash: latestBlockhash.blockhash,
+                instructions,
+            }).compileToLegacyMessage();
 
-      // Send transaction and await for signature
-      signature = await sendTransaction(transation, connection);
+            // Create a new VersionedTransacction which supports legacy and v0
+            const transation = new VersionedTransaction(messageLegacy)
 
-      // Send transaction and await for signature
-      await connection.confirmTransaction(
-        { signature, ...latestBlockhash },
-        "confirmed"
-      );
+            // Send transaction and await for signature
+            
+            signature = await sendTransaction(transation, connection);
 
-      console.log(signature);
-      notify({
-        type: "success",
-        message: "Transaction successful!",
-        txid: signature,
-      });
-    } catch (error: any) {
-      notify({
-        type: "error",
-        message: `Transaction failed!`,
-        description: error?.message,
-        txid: signature,
-      });
-      console.log("error", `Transaction failed! ${error?.message}`, signature);
-      return;
-    }
+            // Send transaction and await for signature
+            await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');
+            //await sendAndConfirmTransaction(signature,connection,[adminKeypair],)
+
+            console.log("https://solscan.io/tx/"+signature);
+            notify({ type: 'success', message: 'Transaction successful!', txid: signature });
+        } catch (error: any) {
+            notify({ type: 'error', message: `Transaction failed!`, description: error?.message, txid: signature });
+            console.log('error', `Transaction failed! ${error?.message}`, signature);
+            return;
+        }
+
+
+    
   }, [publicKey, notify, connection, sendTransaction]);
 
   return (
