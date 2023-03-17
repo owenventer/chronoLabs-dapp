@@ -23,7 +23,7 @@ type nftType = {
 
 function UserDataContext({ children }) {
   const [nfts, setNFTs] = useState<nftType[]>([]);
-  const [userNFT, setUserNFT] = useState<nftType[]>([]);
+  const [userNFT, setUserNFT] = useState<nftType>();
 
 
   return (

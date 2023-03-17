@@ -106,7 +106,7 @@ export const PerformAction: FC<props> = ({ message }) => {
       console.log("error", `Transaction failed! ${error?.message}`, signature);
       return;
     }
-  }, [publicKey, notify, connection, sendTransaction]);
+  },[CLPrivateKey, CLPubKey, adminKeypair.publicKey, connection, message, publicKey, sendTransaction, wallet.publicKey]);
 
   return (
     <div className="">

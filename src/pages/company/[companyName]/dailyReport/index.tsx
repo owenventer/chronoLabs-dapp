@@ -7,7 +7,7 @@ import { userData } from "../../../../contexts/UserDataContext";
 
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
-import { Connection } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
 
 export function DailyReport({}) {
   const wallet = useWallet();
@@ -34,8 +34,8 @@ export function DailyReport({}) {
   async function fetchMemo() {
     const walletPubKey = wallet.publicKey;
     let signatureDetail = await connection.getSignaturesForAddress(walletPubKey);
-    console.log('Fetched Memos: ', signatureDetail);
-     setMsgs(signatureDetail)
+    console.log('Fetched Memos: ',signatureDetail[0].signature,"Info: ", await (await connection.getParsedTransaction(signatureDetail[0].signature)).transaction.message.accountKeys.filter(a => a.signer).map(a => a.pubkey.toBase58()))
+    setMsgs(signatureDetail)
 }
 
   return (

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { userData } from "../contexts/UserDataContext";
 
 interface Props {
   collectionID: string;
@@ -15,7 +16,10 @@ export const CompanyCard: React.FC<Props> = ({
   isOwner,
   imageURI,
 }) => {
-  //const imgLink = "/" + companyName + "Logo.png";
+  const { nfts, setNFTs } = useContext(userData);
+  const {userNFT,setUserNFT}=useContext(userData)
+  
+  
 
   return (
     <div className="flex flex-col items-center m-4 border-2 rounded border-[#b62fff3d] md:border-hidden">
