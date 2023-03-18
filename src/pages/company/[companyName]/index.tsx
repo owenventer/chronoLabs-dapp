@@ -8,6 +8,7 @@ import { PerformAction } from "components/performAction";
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import { userData } from "../../../contexts/UserDataContext";
+import { CollectionIcon } from "@heroicons/react/outline";
 
 export function EmployeeDashView({}) {
   const wallet = useWallet();
@@ -51,11 +52,11 @@ export function EmployeeDashView({}) {
         />
         {/* Button div */}
         <div className="grid sm:grid-cols-1 m-1 md:grid-cols-2">
-          <PerformAction message={'Clock In'}></PerformAction> 
-          <PerformAction message={'Clock Out'}></PerformAction>
-          <PerformAction message={'Pick Up Pizza'}></PerformAction>
-          <PerformAction message={'Deliver Pizza'}></PerformAction>
-          <PerformAction message={'Back at Resturant'}></PerformAction>
+          <PerformAction message={'Clock In'} collectionID={""+collectionID}></PerformAction> 
+          <PerformAction message={'Clock Out'} collectionID={""+collectionID}></PerformAction>
+          <PerformAction message={'Pick Up Pizza'} collectionID={""+collectionID}></PerformAction>
+          <PerformAction message={'Deliver Pizza'} collectionID={""+collectionID}></PerformAction>
+          <PerformAction message={'Back at Resturant'} collectionID={""+collectionID}></PerformAction>
           <Link href={`${collectionID}/POS`}>
             <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-3/4 m-2 mx-10 rounded">
               {" "}

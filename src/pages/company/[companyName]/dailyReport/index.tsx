@@ -24,17 +24,19 @@ export function DailyReport({}) {
 
   if (nftObject) {
     const logo = nftObject.logo;
-    console.log(logo); // prints the logo of the object with the given collection ID
+    //console.log(logo); // prints the logo of the object with the given collection ID
     imgLink = "" + logo;
   } else {
     console.log("Object not found");
   }
   const [msgs,setMsgs]=useState([]);
+  
 
   async function fetchMemo() {
     const walletPubKey = wallet.publicKey;
     let signatureDetail = await connection.getSignaturesForAddress(walletPubKey);
-    console.log('Fetched Memos: ',signatureDetail[0].signature,"Info: ", await (await connection.getParsedTransaction(signatureDetail[0].signature)).transaction.message.accountKeys.filter(a => a.signer).map(a => a.pubkey.toBase58()))
+    console.log('Fetched Memos: ',signatureDetail[0].memo)
+    //await (await connection.getParsedTransaction(signatureDetail[0].signature)).transaction.message.accountKeys.filter(a => a.signer).map(a => a.pubkey.toBase58())
     setMsgs(signatureDetail)
 }
 

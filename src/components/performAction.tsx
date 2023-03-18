@@ -16,10 +16,12 @@ import { notify } from "../utils/notifications";
 
 interface props {
   message: string;
+  collectionID: string;
 }
+const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
 
-export const PerformAction: FC<props> = ({ message }) => {
-  const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
+export const PerformAction: FC<props> = ({ message,collectionID }) => {
+ 
   const { publicKey, sendTransaction } = useWallet();
   const wallet = useWallet();
   //adminWallet
@@ -54,7 +56,7 @@ export const PerformAction: FC<props> = ({ message }) => {
             },
             { pubkey: wallet.publicKey, isSigner: true, isWritable: true },
           ],
-          data: Buffer.from(message, "utf-8"),
+          data: Buffer.from(collectionID+"#"+ message, "utf-8"),
           programId: new PublicKey(
             "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"
           ),
@@ -106,7 +108,7 @@ export const PerformAction: FC<props> = ({ message }) => {
       console.log("error", `Transaction failed! ${error?.message}`, signature);
       return;
     }
-  },[CLPrivateKey, CLPubKey, adminKeypair.publicKey, connection, message, publicKey, sendTransaction, wallet.publicKey]);
+  },[CLPrivateKey, CLPubKey, adminKeypair.publicKey, message, publicKey, sendTransaction, wallet.publicKey]);
 
   return (
     <div className="">
