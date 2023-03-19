@@ -34,9 +34,11 @@ export function EmployeeDashView({}) {
   return (
     <div className="md:hero mx-auto m-10 p-5">
       {/* navigation buttons in top corners  */}
+      <Link href={`${collectionID}/dailyReport`}>
       <button className=" absolute top-20 right-10 shadow-lg bg-black bg-opacity-50 rounded text-gray-100 py-2 px-2 ">
-        My Profile
+        Activity Log
       </button>
+      </Link>
       <Link href="/homeView">
         <button className=" absolute top-20 left-10 shadow-lg bg-black bg-opacity-50 rounded text-gray-100 py-2 px-2 ">
           Back
