@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { userData } from "../../../../contexts/UserDataContext";
+import moment from 'moment';
 
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
@@ -12,6 +13,7 @@ import { Connection, PublicKey } from "@solana/web3.js";
 export function DailyReport({}) {
   const wallet = useWallet();
   const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
+ 
 
   //Link for company image
   const { nfts } = useContext(userData);
@@ -30,14 +32,25 @@ export function DailyReport({}) {
     console.log("Object not found");
   }
   const [msgs,setMsgs]=useState([]);
+  const [validMsgs,setValidMsgs]=useState([]);
   
 
   async function fetchMemo() {
     const walletPubKey = wallet.publicKey;
-    let signatureDetail = await connection.getSignaturesForAddress(walletPubKey);
-    console.log('Fetched Memos: ',signatureDetail[0].memo)
-    //await (await connection.getParsedTransaction(signatureDetail[0].signature)).transaction.message.accountKeys.filter(a => a.signer).map(a => a.pubkey.toBase58())
-    setMsgs(signatureDetail)
+    let userSignatures = await connection.getSignaturesForAddress(walletPubKey);
+    console.log('Fetched Memos: ',userSignatures[0].memo)
+    //await (await connection.getParsedTransaction(userSignatures[0].signature)).transaction.message.accountKeys.filter(a => a.signer).map(a => a.pubkey.toBase58())
+    setMsgs(userSignatures)
+    setValidMsgs(userSignatures.filter((msg) => (msg.memo ?? "").includes(String(collectionID))))
+    for (let i = 0; i < validMsgs.length; i++) {
+      console.log(validMsgs[i]);
+    }
+
+    //TO DO:
+    //1. Get all the transactions for the user
+    //2. Filter out the transactions that are not for the company
+    //3. Get the messages from the memo and map them to a list
+    //4. Display all the messages
 }
 
   return (
@@ -65,110 +78,21 @@ export function DailyReport({}) {
           </p>
           <section className="container mx-auto p-6 font-mono">
             <div className="w-full mb-8 overflow-hidden  shadow-lg">
-              <div className="w-full overflow-x-auto table-fixed">
+              <div className="w-full overflow-x-auto table-fixed">               
                 <table className=" table-fixed">
                   <thead>
                     <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-gray-500 uppercase">
-                      <th className="w-3/7 px-4 py-3 border">Employee Name</th>
+                      <th className="w-3/7 px-4 py-3 border">Date</th>
                       <th className="px-4 py-3 border">Activity</th>
                     </tr>
                   </thead>
                   <tbody className="bg-gray-700">
-                    <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
-                        <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
-                          <div>
-                            <p className="font-semibold text-gray-100">
-                              Sol Ana
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
-                        {/* {msgs} */}
-                      </td>
+                  {validMsgs.map((str, i) => (
+                    <tr key={i}>
+                       <td className="px-4 py-3 border">{moment.unix(str.blockTime).format("YYYY-MM-DD HH:mm:ss")}</td>
+                       <td className="px-4 py-3 border">{str.memo.split("#")[1]}</td>
                     </tr>
-                    <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
-                        <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
-                          <div>
-                            <p className="font-semibold text-gray-100">
-                              Sol Ana
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
-                        Picked Up Pizza
-                      </td>
-                    </tr>
-                    <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
-                        <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
-                          <div>
-                            <p className="font-semibold text-gray-100">
-                              Dev Eloper
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
-                        Clocked In
-                      </td>
-                    </tr>
-                    <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
-                        <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
-                          <div>
-                            <p className="font-semibold text-gray-100">
-                              Sol Ana
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
-                        Sold Pizza to Ght8...6Gt7 for $12.99
-                      </td>
-                    </tr>
-                    <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
-                        <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
-                          <div>
-                            <p className="font-semibold text-gray-100">
-                              Sol Ana
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
-                        Clocked Out
-                      </td>
-                    </tr>
+                  ))}
                   </tbody>
                 </table>
               </div>
