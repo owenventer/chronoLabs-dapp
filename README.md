@@ -1,5 +1,5 @@
 <p align="center">
-# ChronoLabs
+    <img width="200" src="./public/fullLogo.png" alt="Chronolabs Logo">
 </p>
 
 # ChronoLabs 
