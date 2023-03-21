@@ -15,6 +15,7 @@ ChronoLab's operates as a Solana based dApp built for any business that uses blo
 
 
 **Integrated Crypto Payments**
+
 Being able to receive payments is an important part of most businesses and ChronoLabs will provide a way for employees to accept crypto payments from their devices where ever they are. With the ChronoLabs POS system a customer can simply scan a SolanaPay QR code to make a payment. 
 
 
