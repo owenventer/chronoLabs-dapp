@@ -11,7 +11,7 @@ ChronoLabs is a solution for corporations and businesses to employ an on-chain c
 ### What is ChronoLabs
 
 ChronoLab's operates as a Solana based dApp built for any business that uses block chain technology. Access to the site is gated by the possession of a specific NFT (Non Fungible Token). Each individual employee will hold a unique employer issued NFT and enter records and data by interacting on the web app using the NFT as the key. See our 5-step management model.
-![ChronoLabs 5-Step Managememnt Model]()![5-step](https://user-images.githubusercontent.com/55946656/226581410-9af337e3-aca3-46a1-bfbf-e9225a8f2492.png)
+![ChronoLabs 5-Step Managememnt Model](https://user-images.githubusercontent.com/55946656/226581410-9af337e3-aca3-46a1-bfbf-e9225a8f2492.png)
 
 
 ** Integrated Crypto Payments **
