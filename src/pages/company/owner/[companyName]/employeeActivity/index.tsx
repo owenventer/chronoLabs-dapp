@@ -8,7 +8,7 @@ import { userData } from "../../../../../contexts/UserDataContext";
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 
-export function EmployeeReport({}) {
+export function EmployeeActivity({}) {
   const wallet = useWallet();
   const { connection } = useConnection();
 
@@ -159,4 +159,4 @@ export function EmployeeReport({}) {
     </div>
   );
 }
-export default EmployeeReport;
+export default EmployeeActivity;

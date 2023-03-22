@@ -55,9 +55,9 @@ export function EmployerDashView({}) {
             </Link>
           </div>
           <div>
-            <Link href={`${collectionID}/employeeReport`}>
+            <Link href={`${collectionID}/employeeActivity`}>
               <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded">
-                Employee Reports
+                Employee Activity
               </button>
             </Link>
           </div>
@@ -86,6 +86,13 @@ export function EmployerDashView({}) {
             <Link href={`${collectionID}/addEmployee`}>
               <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded">
                 Add Employee
+              </button>
+            </Link>
+          </div>
+          <div>
+            <Link href={`${collectionID}/employeeOverview`}>
+              <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3 m-2 mx-10 rounded">
+                Employee Overview
               </button>
             </Link>
           </div>
