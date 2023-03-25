@@ -56,17 +56,17 @@ export function TaxReport({}) {
               <div className="w-full overflow-x-auto table-fixed">
                 <table className="w-full">
                   <thead>
-                    <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-gray-500 uppercase">
-                      <th className="px-4 py-3 border">Employee Name</th>
-                      <th className="px-4 py-3 border">Payroll Taxes</th>
-                      <th className="px-4 py-3 border">Local Taxes</th>
-                      <th className="px-4 py-3 border">State Taxes</th>
-                      <th className="px-4 py-3 border">Federal Taxes</th>
+                    <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-[#1B161D] bg-opacity-60 uppercase">
+                      <th className="px-4 py-3 border-[#9477B7] border">Employee Name</th>
+                      <th className="px-4 py-3 border-[#9477B7] border">Payroll Taxes</th>
+                      <th className="px-4 py-3 border-[#9477B7] border">Local Taxes</th>
+                      <th className="px-4 py-3 border-[#9477B7] border">State Taxes</th>
+                      <th className="px-4 py-3 border-[#9477B7] border">Federal Taxes</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-gray-700">
+                  <tbody className="bg-gray-700 bg-opacity-70">
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border-[#9477B7] border">
                         <div className="flex items-center text-sm">
                           {/* We can add images if we want to:
                            <div className="relative w-8 h-8 mr-3 rounded-full md:block">
@@ -80,13 +80,13 @@ export function TaxReport({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
+                      <td className="px-4 py-3  border-[#9477B7] border">$104</td>
+                      <td className="px-4 py-3  border-[#9477B7] border">$104</td>
+                      <td className="px-4 py-3  border-[#9477B7] border">$104</td>
+                      <td className="px-4 py-3  border-[#9477B7] border">$104</td>
                     </tr>
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border-[#9477B7] border">
                         <div className="flex items-center text-sm">
                           {/* We can add images if we want to:
                            <div className="relative w-8 h-8 mr-3 rounded-full md:block">
@@ -100,13 +100,13 @@ export function TaxReport({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
+                      <td className="px-4 py-3  border-[#9477B7] border">$104</td>
+                      <td className="px-4 py-3  border-[#9477B7] border">$104</td>
+                      <td className="px-4 py-3  border-[#9477B7] border">$104</td>
+                      <td className="px-4 py-3  border-[#9477B7] border">$104</td>
                     </tr>
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border-[#9477B7] border">
                         <div className="flex items-center text-sm">
                           {/* We can add images if we want to:
                            <div className="relative w-8 h-8 mr-3 rounded-full md:block">
@@ -120,10 +120,10 @@ export function TaxReport({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3  border">$104</td>
-                      <td className="px-4 py-3 border">$104</td>
-                      <td className="px-4 py-3 border">$104</td>
+                      <td className="px-4 py-3  border-[#9477B7] border">$104</td>
+                      <td className="px-4 py-3  border-[#9477B7] border">$104</td>
+                      <td className="px-4 py-3 border-[#9477B7] border">$104</td>
+                      <td className="px-4 py-3 border-[#9477B7] border">$104</td>
                     </tr>
                   </tbody>
                 </table>
