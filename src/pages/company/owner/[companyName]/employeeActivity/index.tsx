@@ -55,24 +55,19 @@ export function EmployeeActivity({}) {
               <div className="w-full overflow-x-auto table-fixed">
                 <table className="w-full">
                   <thead>
-                    <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-gray-500 uppercase">
-                      <th className="px-4 py-3 border">Employee Name</th>
-                      <th className="px-4 py-3 border">Wallet</th>
-                      <th className="px-4 py-3 border">Hours Worked (D)</th>
-                      <th className="px-4 py-3 border">Hours Worked (W)</th>
-                      <th className="px-4 py-3 border">Sales</th>
-                      <th className="px-4 py-3 border">Pay</th>
+                    <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-[#1B161D] bg-opacity-60 uppercase">
+                      <th className="px-4 py-3 border-[#9477B7] border">Employee Name</th>
+                      <th className="px-4 py-3 border-[#9477B7] border">Wallet</th>
+                      <th className="px-4 py-3 border-[#9477B7] border">Hours Worked (D)</th>
+                      <th className="px-4 py-3 border-[#9477B7] border">Hours Worked (W)</th>
+                      <th className="px-4 py-3 border-[#9477B7] border">Sales</th>
+                      <th className="px-4 py-3 border-[#9477B7] border">Pay</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-gray-700">
+                  <tbody className="bg-gray-700 bg-opacity-60">
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border-[#9477B7] border">
                         <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
                           <div>
                             <p className="font-semibold text-gray-100">
                               Sol Ana
@@ -81,26 +76,21 @@ export function EmployeeActivity({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
+                      <td className="px-4 py-3 text-sm font-semibold border-[#9477B7] border">
                         GeQx...rT45
                       </td>
-                      <td className="px-4 py-3 text-xs border">
+                      <td className="px-4 py-3 text-xs border-[#9477B7] border">
                         <span className="px-4 py-3 text-sm font-semibold">
                           7
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-sm border">26</td>
-                      <td className="px-4 py-3 text-sm border">$309</td>
-                      <td className="px-4 py-3 text-sm border">$2600</td>
+                      <td className="px-4 py-3 text-sm border-[#9477B7] border">26</td>
+                      <td className="px-4 py-3 text-sm border-[#9477B7] border">$309</td>
+                      <td className="px-4 py-3 text-sm border-[#9477B7] border">$2600</td>
                     </tr>
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border-[#9477B7] border">
                         <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
                           <div>
                             <p className="font-semibold text-gray-100">
                               Sol Ana
@@ -109,26 +99,21 @@ export function EmployeeActivity({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
+                      <td className="px-4 py-3 text-sm font-semibold border-[#9477B7] border">
                         GeQx...rT45
                       </td>
-                      <td className="px-4 py-3 text-xs border">
+                      <td className="px-4 py-3 text-xs border-[#9477B7] border">
                         <span className="px-4 py-3 text-sm font-semibold">
                           7
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-sm border">26</td>
-                      <td className="px-4 py-3 text-sm border">$309</td>
-                      <td className="px-4 py-3 text-sm border">$2600</td>
+                      <td className="px-4 py-3 text-sm border-[#9477B7] border">26</td>
+                      <td className="px-4 py-3 text-sm border-[#9477B7] border">$309</td>
+                      <td className="px-4 py-3 text-sm border-[#9477B7] border">$2600</td>
                     </tr>
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border-[#9477B7] border">
                         <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
                           <div>
                             <p className="font-semibold text-gray-100">
                               Sol Ana
@@ -137,17 +122,17 @@ export function EmployeeActivity({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
+                      <td className="px-4 py-3 text-sm font-semibold border-[#9477B7] border">
                         GeQx...rT45
                       </td>
-                      <td className="px-4 py-3 text-xs border">
+                      <td className="px-4 py-3 text-xs border-[#9477B7] border">
                         <span className="px-4 py-3 text-sm font-semibold">
                           7
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-sm border">26</td>
-                      <td className="px-4 py-3 text-sm border">$309</td>
-                      <td className="px-4 py-3 text-sm border">$2600</td>
+                      <td className="px-4 py-3 text-sm border-[#9477B7] border">26</td>
+                      <td className="px-4 py-3 text-sm border-[#9477B7] border">$309</td>
+                      <td className="px-4 py-3 text-sm border-[#9477B7] border">$2600</td>
                     </tr>
                   </tbody>
                 </table>
