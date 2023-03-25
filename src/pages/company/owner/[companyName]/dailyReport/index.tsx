@@ -57,20 +57,16 @@ export function DailyReport({}) {
               <div className="w-full overflow-x-auto table-fixed">
                 <table className=" table-fixed">
                   <thead>
-                    <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-gray-500 uppercase">
-                      <th className="w-3/7 px-4 py-3 border">Employee Name</th>
-                      <th className="px-4 py-3 border">Activity</th>
+                    <tr className="text-md font-semibold tracking-wide text-white-200 bg-[#1B161D] bg-opacity-60 text-center ">
+                      <th className="w-3/7 px-4 py-3 border-[#9477B7] border">Employee Name</th>
+                      <th className="px-4 py-3 border-[#9477B7] border">Activity</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-gray-700">
+                  <tbody className="bg-gray-700 bg-opacity-60">
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border border-[#9477B7]">
                         <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
+                        
                           <div>
                             <p className="font-semibold text-gray-100">
                               Sol Ana
@@ -78,18 +74,14 @@ export function DailyReport({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
+                      <td className="px-4 py-3 text-sm font-semibold border border-[#9477B7]">
                         Clock In
                       </td>
                     </tr>
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border border-[#9477B7]">
                         <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
+                        
                           <div>
                             <p className="font-semibold text-gray-100">
                               Sol Ana
@@ -97,18 +89,14 @@ export function DailyReport({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
+                      <td className="px-4 py-3 text-sm font-semibold border border-[#9477B7]">
                         Picked Up Pizza
                       </td>
                     </tr>
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border border-[#9477B7]">
                         <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
+                        
                           <div>
                             <p className="font-semibold text-gray-100">
                               Dev Eloper
@@ -116,18 +104,14 @@ export function DailyReport({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
+                      <td className="px-4 py-3 text-sm font-semibold border border-[#9477B7]">
                         Clocked In
                       </td>
                     </tr>
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border border-[#9477B7]">
                         <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
+                        
                           <div>
                             <p className="font-semibold text-gray-100">
                               Sol Ana
@@ -135,18 +119,14 @@ export function DailyReport({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
+                      <td className="px-4 py-3 text-sm font-semibold border border-[#9477B7]">
                         Sold Pizza to Ght8...6Gt7 for $12.99
                       </td>
                     </tr>
                     <tr className="text-gray-100">
-                      <td className="px-4 py-3 border">
+                      <td className="px-4 py-3 border border-[#9477B7]">
                         <div className="flex items-center text-sm">
-                          {/* We can add images if we want to:
-                           <div className="relative w-8 h-8 mr-3 rounded-full md:block">
-                            <img className="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                            <div className="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                          </div> */}
+                        
                           <div>
                             <p className="font-semibold text-gray-100">
                               Sol Ana
@@ -154,7 +134,7 @@ export function DailyReport({}) {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold border">
+                      <td className="px-4 py-3 text-sm font-semibold border border-[#9477B7]">
                         Clocked Out
                       </td>
                     </tr>
