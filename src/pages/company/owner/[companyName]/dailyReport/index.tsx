@@ -68,6 +68,10 @@ if (nftObject) {
     //4. Display all the messages
 }
 
+useEffect(() => {
+  fetchMemo();
+},[])
+
   return (
     <>
     <Link href={`../${collectionID}`}>
@@ -128,7 +132,7 @@ if (nftObject) {
             </div>
           </section>
           <div className="flex justify-center items-center">
-          <button onClick={fetchMemo} className=" bg-[#14F195] hover:scale-105 text-black font-bold p-2 rounded"> Get Activity Log</button>
+          <button onClick={fetchMemo} className=" bg-[#14F195] hover:scale-105 text-black font-bold p-2 rounded"> Refresh</button>
           </div>
           
 

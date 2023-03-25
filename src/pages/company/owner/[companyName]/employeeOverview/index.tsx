@@ -4,13 +4,38 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { userData } from "../../../../../contexts/UserDataContext";
-
+import {
+  PublicKey,
+  Connection,
+} from "@solana/web3.js";
 // Wallet
-import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import { useWallet, useConnection, } from "@solana/wallet-adapter-react";
+import { Metaplex } from "@metaplex-foundation/js";
+
+type nftType = {
+  companyName: string;
+  logo: string;
+  numTasks: number;
+  tasks: string[];
+  employeeName: string;
+  employeeType: string;
+  pay: string;
+  ssNum: string;
+  state: string;
+  country: string;
+  startDate: string;
+  employeeStatus: string;
+  isCollection: boolean;
+  businessType: string;
+  einNumber: string;
+  collectionID: string;
+};
 
 export function EmployeeOverview({}) {
   const wallet = useWallet();
-  const { connection } = useConnection();
+  const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
+  const metaplex = new Metaplex(connection);
+  
 
   //Link for company image
   const { nfts } = useContext(userData);
@@ -27,6 +52,101 @@ export function EmployeeOverview({}) {
     imgLink = "" + logo;
   } else {
     console.log("Object not found");
+  }
+  const [emps, setEmps] = useState<nftType[]>([]);
+  const [mintList, setMintList] = useState([]);
+
+  async function getEmployees() {
+    const axios = require('axios')
+
+    const url = `https://api.helius.xyz/v1/mintlist?api-key=${process.env.NEXT_PUBLIC_APIKEY}`;
+
+    const getMintlist = async () => {
+        const { data } = await axios.post(url, {
+            "query": {
+                // ABC collection
+                "verifiedCollectionAddresses": [`${collectionID}`]
+            },
+            "options": {
+                "limit": 10000
+            }
+        });
+        //setEmps(data.result);
+        console.log("Mintlist: ", data.result);
+        data.result.forEach((nft, i) => {
+          console.log(nft["mint"]);
+          setMintList((prevMintList) => [...prevMintList, nft["mint"]]);
+          
+        //   setEmps((prevEmps) => [
+        //     ...prevEmps,{
+        //       companyName: nft.name;
+        //       logo: string;
+        //       numTasks: number;
+        //       tasks: string[];
+        //       employeeName: string;
+        //       employeeType: string;
+        //       pay: string;
+        //       ssNum: string;
+        //       state: string;
+        //       country: string;
+        //       startDate: string;
+        //       employeeStatus: string;
+        //       isCollection: boolean;
+        //       businessType: string;
+        //       einNumber: string;
+        //       collectionID: string;}])
+
+        // })
+        
+     })
+     console.log("mintlist:"+mintList)
+    }
+    await getMintlist();
+
+    const url2 = `https://api.helius.xyz/v0/token-metadata?api-key=${process.env.NEXT_PUBLIC_APIKEY}`
+    const nftAddresses = mintList 
+    const getMetadata = async () => {
+        const { data } = await axios.post(url2, {
+            mintAccounts: nftAddresses,
+            includeOffChain: true,
+            disableCache: false,
+        });
+        console.log("metadata: ", data);
+        data.forEach((nft, i) => {
+          console.log(nft)
+        const offChainAttributes =
+              nft["offChainMetadata"]["uri"]["attributes"];
+        const attributes = offChainAttributes?.map((item) => ({
+          type: item.trait_type,
+          value: item.value,
+        }));
+
+          setEmps((prevEmps) => [
+            ...prevEmps,{
+              companyName: attributes?.find((item) => item.type === "Company Name")?.value,
+              logo: nft["offChainMetadata"]["uri"]["image"],
+              numTasks: attributes?.length,
+              tasks: attributes?.map((item) => item.type),
+              employeeName: attributes?.find((item) => item.type === "Employee Name")?.value,
+              employeeType: attributes?.find((item) => item.type === "Employee Type")?.value,
+              pay: attributes?.find((item) => item.type === "Pay")?.value,
+              ssNum: attributes?.find((item) => item.type === "Social Security #")?.value,
+              state: attributes?.find((item) => item.type === "State")?.value,
+              country: attributes?.find((item) => item.type === "Country")?.value,
+              startDate: attributes?.find((item) => item.type === "Start Date")?.value,
+              employeeStatus: attributes?.find((item) => item.type === "Employee Status")?.value,
+              isCollection: false,
+              businessType: null,
+              einNumber: null,
+              collectionID: nft["onChainMetadata"]["metadata"]["collection"]["key"],}])
+
+      });
+    };
+    await getMetadata();
+    
+    console.log(emps)
+
+
   }
   return (
     <div className="md:hero mx-auto p-5 m-10">
@@ -62,6 +182,20 @@ export function EmployeeOverview({}) {
                       <th className="px-4 py-3 border-[#9477B7]">Actions</th>
                     </tr>
                   </thead>
+                  {/* <tbody className="bg-gray-700 bg-opacity-60 overflow-auto">
+                  {emps.map((emp, i) => (
+                    <tr key={i}>
+                      
+                       <td className="px-4 py-3 border border-[#9477B7]">{emp.}</td>
+                       <td className="px-4 py-3 border border-[#9477B7]">{
+                        
+                       
+                       }</td>
+                       <td className="px-4 py-3 border border-[#9477B7]">{emp.memo.split("#")[1]}</td>
+                       
+                    </tr>
+                  ))}
+                  </tbody> */}
                   <tbody className="bg-gray-700 bg-opacity-60">
                     <tr className="text-gray-100">
                       <td className="px-4 py-3 border-y border-[#9477B7]">
@@ -177,6 +311,9 @@ export function EmployeeOverview({}) {
             </div>
           </section>
         </div>
+        <div className="flex justify-center items-center">
+          <button onClick={getEmployees} className=" bg-[#14F195] hover:scale-105 text-black font-bold p-2 rounded"> Refresh</button>
+          </div>
       </div>
     </div>
   );

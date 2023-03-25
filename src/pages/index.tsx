@@ -148,7 +148,7 @@ export const SignIn: FC = ({}) => {
                 {
                   //change when added company name
                   companyName: attributes.find(
-                    (item) => item.type === "Employee Name"
+                    (item) => item.type === "Company Name"
                   )?.value,
                   logo: data[i]["offChainMetadata"]["metadata"]["image"],
                   numTasks: 0,
