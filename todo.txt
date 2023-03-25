@@ -1,9 +1,9 @@
 Todo list:
-DONE: - Add company Name to NFTs when creating new employee
 - Add "to" address when minting employee NFTs
- -Add owner variable 
 
-Next:
-DONE: Add the company ID to nfts so we can get the image URL   
-DONE: add collection ID to creating a new employee 
+
+Employer:
+-Add Employee report ( all employees tasks)
+-Add employees page where one can pay employees. 
+
 

@@ -89,16 +89,16 @@ export function DailyReport({}) {
               {tableVisible ?(
               <table className="text-center table-fixed">
                   <thead>
-                    <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-gray-500 uppercase">
-                      <th className="w-3/7 px-4 py-3 border">Date</th>
-                      <th className="px-4 py-3 border">Activity</th>
+                    <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-[#1B161D] bg-opacity-60 uppercase">
+                      <th className="px-4 py-3 border-[#9477B7] border text-center">Date</th>
+                      <th className="px-4 py-3 border-[#9477B7] border text-center">Activity</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-gray-700">
+                  <tbody className="bg-gray-700 bg-opacity-60">
                   {validMsgs.map((str, i) => (
                     <tr key={i}>
-                       <td className="px-4 py-3 border">{moment.unix(str.blockTime).format("YYYY-MM-DD HH:mm:ss")}</td>
-                       <td className="px-4 py-3 border">{str.memo.split("#")[1]}</td>
+                       <td className="px-4 py-3 border border-[#9477B7]">{moment.unix(str.blockTime).format("YYYY-MM-DD HH:mm:ss")}</td>
+                       <td className="px-4 py-3 border border-[#9477B7]">{str.memo.split("#")[1]}</td>
                     </tr>
                   ))}
                   </tbody>
