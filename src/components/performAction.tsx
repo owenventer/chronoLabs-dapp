@@ -17,10 +17,11 @@ import { notify } from "../utils/notifications";
 interface props {
   message: string;
   collectionID: string;
+  employeeName: string;
 }
 const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
 
-export const PerformAction: FC<props> = ({ message,collectionID }) => {
+export const PerformAction: FC<props> = ({ message,collectionID,employeeName }) => {
  
   const { publicKey, sendTransaction } = useWallet();
   const wallet = useWallet();
@@ -56,7 +57,7 @@ export const PerformAction: FC<props> = ({ message,collectionID }) => {
             },
             { pubkey: wallet.publicKey, isSigner: true, isWritable: true },
           ],
-          data: Buffer.from(collectionID+"#"+ message, "utf-8"),
+          data: Buffer.from(collectionID+"#"+ message+"#"+employeeName, "utf-8"),
           programId: new PublicKey(
             "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"
           ),

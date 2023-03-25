@@ -154,7 +154,7 @@ export const NewBusiness: FC = ({}) => {
     console.log("Metadata Uri:", uri);
     return uri;
   }
-
+ 
   //helper function to create an NFT (collection NFT)
   async function createCollectionNFT(
     metaplex: Metaplex,

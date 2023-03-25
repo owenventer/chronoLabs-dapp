@@ -15,14 +15,25 @@ export function DailyReport({}) {
   const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
  
 
-  //Link for company image
-  const { nfts } = useContext(userData);
-  const router = useRouter();
-  const collectionID = router.query.companyName;
-  console.log(collectionID);
-  var imgLink = "/fullLogo.png";
+//Link for company image
+const { nfts } = useContext(userData);
+const router = useRouter();
+const collectionID = router.query.companyName;
+console.log(collectionID);
+var imgLink = "/fullLogo.png";
 
-  const nftObject = nfts.find((nft) => nft.collectionID === collectionID);
+const nftObject = nfts.find((nft) => nft.collectionID === collectionID);
+
+if (nftObject) {
+  const logo = nftObject.logo;
+  console.log(logo); // prints the logo of the object with the given collection ID
+  imgLink = "" + logo;
+} else {
+  console.log("Object not found");
+}
+
+
+
 
   if (nftObject) {
     const logo = nftObject.logo;
@@ -40,10 +51,20 @@ export function DailyReport({}) {
     
     const walletPubKey = wallet.publicKey;
     let userSignatures = await connection.getSignaturesForAddress(walletPubKey);
-    console.log('Fetched Memos: ',userSignatures[0].memo)
+    let adminSignatures = await connection.getSignaturesForAddress(new PublicKey("B5N3Q9Fw3zijTA3ih87cNDbst7bJ7AfTri7XJPX9wTNg"));
+    const validSigs= userSignatures.filter(item1 => adminSignatures.some(item2 => item1.signature === item2.signature));
+
+    // const newMsgs=[];
+    // for (let i = 0; i < userSignatures.length; i++) {
+    //   const signers=await (await connection.getParsedTransaction(userSignatures[i].signature)).transaction.message.accountKeys.filter(a => a.signer).map(a => a.pubkey.toBase58());
+    //    if(signers.includes("B5N3Q9Fw3zijTA3ih87cNDbst7bJ7AfTri7XJPX9wTNg")){
+    //     console.log("VALID SIGNER")
+    //     newMsgs.push(userSignatures[i]);
+    //   }
+    // }
     //await (await connection.getParsedTransaction(userSignatures[0].signature)).transaction.message.accountKeys.filter(a => a.signer).map(a => a.pubkey.toBase58())
-    setMsgs(userSignatures)
-    setValidMsgs(userSignatures.filter((msg) => (msg.memo ?? "").includes(String(collectionID))))
+    
+    setValidMsgs(validSigs.filter((msg) => (msg.memo ?? "").includes(String(collectionID))))
     for (let i = 0; i < validMsgs.length; i++) {
       console.log(validMsgs[i]);
     }

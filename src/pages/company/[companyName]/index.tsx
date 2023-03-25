@@ -54,11 +54,11 @@ export function EmployeeDashView({}) {
         />
         {/* Button div */}
         <div className="grid sm:grid-cols-1 m-1 md:grid-cols-2">
-          <PerformAction message={'Clock In'} collectionID={""+collectionID}></PerformAction> 
-          <PerformAction message={'Clock Out'} collectionID={""+collectionID}></PerformAction>
-          <PerformAction message={'Pick Up Pizza'} collectionID={""+collectionID}></PerformAction>
-          <PerformAction message={'Deliver Pizza'} collectionID={""+collectionID}></PerformAction>
-          <PerformAction message={'Back at Resturant'} collectionID={""+collectionID}></PerformAction>
+          <PerformAction message={'Clock In'} collectionID={""+collectionID} employeeName={""+nftObject.employeeName}></PerformAction> 
+          <PerformAction message={'Clock Out'} collectionID={""+collectionID} employeeName={""+nftObject.employeeName} ></PerformAction>
+          <PerformAction message={'Pick Up Pizza'} collectionID={""+collectionID} employeeName={""+nftObject.employeeName}></PerformAction>
+          <PerformAction message={'Deliver Pizza'} collectionID={""+collectionID} employeeName={""+nftObject.employeeName}></PerformAction>
+          <PerformAction message={'Back at Resturant'} collectionID={""+collectionID} employeeName={""+nftObject.employeeName}></PerformAction>
           <Link href={`${collectionID}/POS`}>
             <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-3/4 m-2 mx-10 rounded">
               {" "}
