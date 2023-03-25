@@ -57,7 +57,7 @@ if (nftObject) {
     setMsgs(userSignatures)
     setValidMsgs(userSignatures.filter((msg) => (msg.memo ?? "").includes(String(collectionID))))
     for (let i = 0; i < validMsgs.length; i++) {
-      console.log("Valid Msgs:"+validMsgs[i].signature);
+      console.log(validMsgs[i]);
     }
     setTableVisible(true);
 
@@ -96,24 +96,28 @@ if (nftObject) {
             Activity Log
           </p>
           <section className="container mx-auto p-6 font-mono">
-            <div className="w-full mb-8 overflow-hidden  shadow-lg">
-              <div className=" flex justify-center overflow-x-auto table-fixed"> 
+            <div className="w-full mb-8 h-80 overflow-auto shadow-lg ">
+              <div className=" flex justify-center table-fixed "> 
               {tableVisible ?(
-              <table className="text-center table-fixed">
-                  <thead>
-                    <tr className="text-md font-semibold tracking-wide text-left text-white-200 bg-[#1B161D] bg-opacity-60 uppercase">
-                      <th className="px-4 py-3 border-[#9477B7] border text-center">Date</th>
-                      <th className="px-4 py-3 border-[#9477B7] border text-center">Employee</th>
-                      <th className="px-4 py-3 border-[#9477B7] border text-center">Activity</th>
+              <table className="text-center table-fixed ">
+                  <thead className="sticky top-0">
+                    <tr className=" text-md font-semibold tracking-wide text-left text-white-200 bg-[#1B161D] uppercase">
+                      <th className="px-4 py-3 sticky top-0 border-x border-[#9477B7] text-center">Date</th>
+                      <th className="px-4 py-3 sticky top-0 border-x border-[#9477B7] text-center">Employee</th>
+                      <th className="px-4 py-3 sticky top-0 border-x border-[#9477B7] text-center">Activity</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-gray-700 bg-opacity-60">
+                  <tbody className="bg-gray-700 bg-opacity-60 overflow-auto">
                   {validMsgs.map((str, i) => (
                     <tr key={i}>
                       
                        <td className="px-4 py-3 border border-[#9477B7]">{moment.unix(str.blockTime).format("YYYY-MM-DD HH:mm:ss")}</td>
-                       <td className="px-4 py-3 border border-[#9477B7]">{str.memo.split("#")[2]}</td>
+                       <td className="px-4 py-3 border border-[#9477B7]">{
+                        str.memo.split("#")[3] &&(str.memo.split("#")[2]+" ("+str.memo.split("#")[3]?.toString().substring(0,3)+".."+str.memo.split("#")[3]?.toString().substring(str.memo.split("#")[3]?.toString().length -3)+")")
+                       
+                       }</td>
                        <td className="px-4 py-3 border border-[#9477B7]">{str.memo.split("#")[1]}</td>
+                       
                     </tr>
                   ))}
                   </tbody>
