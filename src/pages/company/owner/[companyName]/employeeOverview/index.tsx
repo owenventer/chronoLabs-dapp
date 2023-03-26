@@ -71,32 +71,11 @@ export function EmployeeOverview({}) {
                 "limit": 10000
             }
         });
-        //setEmps(data.result);
         console.log("Mintlist: ", data.result);
         data.result.forEach((nft, i) => {
           console.log(nft["mint"]);
           setMintList((prevMintList) => [...prevMintList, nft["mint"]]);
-          
-        //   setEmps((prevEmps) => [
-        //     ...prevEmps,{
-        //       companyName: nft.name;
-        //       logo: string;
-        //       numTasks: number;
-        //       tasks: string[];
-        //       employeeName: string;
-        //       employeeType: string;
-        //       pay: string;
-        //       ssNum: string;
-        //       state: string;
-        //       country: string;
-        //       startDate: string;
-        //       employeeStatus: string;
-        //       isCollection: boolean;
-        //       businessType: string;
-        //       einNumber: string;
-        //       collectionID: string;}])
 
-        // })
         
      })
      console.log("mintlist:"+mintList)
@@ -114,37 +93,37 @@ export function EmployeeOverview({}) {
         console.log("metadata: ", data);
         data.forEach((nft, i) => {
           console.log(nft)
-        const offChainAttributes =
-              nft["offChainMetadata"]["uri"]["attributes"];
-        const attributes = offChainAttributes?.map((item) => ({
-          type: item.trait_type,
-          value: item.value,
-        }));
+        const offChainAttributes = nft["offChainMetadata"]["uri"]["attributes"];
+        // const attributes = offChainAttributes.map((item) => ({
+        //   type: item.trait_type,
+        //   value: item.value,
+        // }));
+        console.log(offChainAttributes)
 
-          setEmps((prevEmps) => [
-            ...prevEmps,{
-              companyName: attributes?.find((item) => item.type === "Company Name")?.value,
-              logo: nft["offChainMetadata"]["uri"]["image"],
-              numTasks: attributes?.length,
-              tasks: attributes?.map((item) => item.type),
-              employeeName: attributes?.find((item) => item.type === "Employee Name")?.value,
-              employeeType: attributes?.find((item) => item.type === "Employee Type")?.value,
-              pay: attributes?.find((item) => item.type === "Pay")?.value,
-              ssNum: attributes?.find((item) => item.type === "Social Security #")?.value,
-              state: attributes?.find((item) => item.type === "State")?.value,
-              country: attributes?.find((item) => item.type === "Country")?.value,
-              startDate: attributes?.find((item) => item.type === "Start Date")?.value,
-              employeeStatus: attributes?.find((item) => item.type === "Employee Status")?.value,
-              isCollection: false,
-              businessType: null,
-              einNumber: null,
-              collectionID: nft["onChainMetadata"]["metadata"]["collection"]["key"],}])
+          // setEmps((prevEmps) => [
+          //   ...prevEmps,{
+          //     companyName: attributes?.find((item) => item.type === "Company Name")?.value,
+          //     logo: nft["offChainMetadata"]["uri"]["image"],
+          //     numTasks: attributes?.length,
+          //     tasks: attributes?.map((item) => item.type),
+          //     employeeName: attributes?.find((item) => item.type === "Employee Name")?.value,
+          //     employeeType: attributes?.find((item) => item.type === "Employee Type")?.value,
+          //     pay: attributes?.find((item) => item.type === "Pay")?.value,
+          //     ssNum: attributes?.find((item) => item.type === "Social Security #")?.value,
+          //     state: attributes?.find((item) => item.type === "State")?.value,
+          //     country: attributes?.find((item) => item.type === "Country")?.value,
+          //     startDate: attributes?.find((item) => item.type === "Start Date")?.value,
+          //     employeeStatus: attributes?.find((item) => item.type === "Employee Status")?.value,
+          //     isCollection: false,
+          //     businessType: null,
+          //     einNumber: null,
+          //     collectionID: nft["onChainMetadata"]["metadata"]["collection"]["key"],}])
 
       });
     };
     await getMetadata();
-    
-    console.log(emps)
+
+    //console.log(emps)
 
 
   }
