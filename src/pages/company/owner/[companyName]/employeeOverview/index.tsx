@@ -4,11 +4,23 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { userData } from "../../../../../contexts/UserDataContext";
-import { PublicKey, Connection, SystemProgram, Transaction, sendAndConfirmTransaction, TransactionSignature, TransactionMessage, VersionedTransaction, TransactionInstruction, Keypair } from "@solana/web3.js";
+import {
+  PublicKey,
+  Connection,
+  SystemProgram,
+  Transaction,
+  sendAndConfirmTransaction,
+  TransactionSignature,
+  TransactionMessage,
+  VersionedTransaction,
+  TransactionInstruction,
+  Keypair,
+} from "@solana/web3.js";
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import { Metaplex } from "@metaplex-foundation/js";
 import { notify } from "utils/notifications";
+import { getOrCreateAssociatedTokenAccount, createTransferInstruction } from "@solana/spl-token";
 
 type nftType = {
   companyName: string;
@@ -148,60 +160,72 @@ export function EmployeeOverview({}) {
 
   async function makePayment(nft: nftType) {
     
-    
     const largestAccounts = await connection.getTokenLargestAccounts(
       new PublicKey(nft.nftMint)
     );
     const largestAccountInfo = await connection.getParsedAccountInfo(
       largestAccounts.value[0].address
     );
-    console.log(largestAccountInfo.value.data["parsed"]["info"]["mint"]);
-    const toWallet=new PublicKey(largestAccountInfo.value.data["parsed"]["info"]["mint"]);
-    
+    console.log("addy: "+largestAccountInfo.value.data["parsed"]["info"]["owner"]);
+    const toWallet = new PublicKey(
+      largestAccountInfo.value.data["parsed"]["info"]["owner"]
+    );
+
     if (!publicKey) {
-      notify({ type: 'error', message: `Wallet not connected!` });
-      console.log('error', `Send Transaction: Wallet not connected!`);
+      notify({ type: "error", message: `Wallet not connected!` });
+      console.log("error", `Send Transaction: Wallet not connected!`);
       return;
-  }
+    }
 
-  let signature: TransactionSignature = '';
-  try {
-
+    let signature: TransactionSignature = "";
+    try {
       // Create instructions to send, in this case a simple transfer
       const instructions = [
-          SystemProgram.transfer({
-              fromPubkey: publicKey,
-              toPubkey: toWallet,
-              lamports: 1_000_000*parseInt(nft.pay),
-          }),
+        SystemProgram.transfer({
+          fromPubkey: publicKey,
+          toPubkey: toWallet,
+          lamports: parseInt(nft.pay),
+        }),
       ];
 
       // Get the lates block hash to use on our transaction and confirmation
-      let latestBlockhash = await connection.getLatestBlockhash()
+      let latestBlockhash = await connection.getLatestBlockhash();
 
       // Create a new TransactionMessage with version and compile it to legacy
       const messageLegacy = new TransactionMessage({
-          payerKey: publicKey,
-          recentBlockhash: latestBlockhash.blockhash,
-          instructions,
+        payerKey: publicKey,
+        recentBlockhash: latestBlockhash.blockhash,
+        instructions,
       }).compileToLegacyMessage();
 
       // Create a new VersionedTransacction which supports legacy and v0
-      const transation = new VersionedTransaction(messageLegacy)
+      const transation = new VersionedTransaction(messageLegacy);
 
       // Send transaction and await for signature
       signature = await sendTransaction(transation, connection);
 
       // Send transaction and await for signature
-      await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');
+      await connection.confirmTransaction(
+        { signature, ...latestBlockhash },
+        "confirmed"
+      );
 
       console.log(signature);
-      notify({ type: 'success', message: 'Transaction successful!', txid: signature });
-  } catch (error: any) {
-      notify({ type: 'error', message: `Transaction failed!`, description: error?.message, txid: signature });
-      console.log('error', `Transaction failed! ${error?.message}`, signature);
+      notify({
+        type: "success",
+        message: "Transaction successful!",
+        txid: signature,
+      });
+    } catch (error: any) {
+      notify({
+        type: "error",
+        message: `Transaction failed!`,
+        description: error?.message,
+        txid: signature,
+      });
+      console.log("error", `Transaction failed! ${error?.message}`, signature);
       return;
-  }
+    }
   }
   return (
     <div className="md:hero mx-auto p-5 m-10">
@@ -265,14 +289,13 @@ export function EmployeeOverview({}) {
                                 View
                               </button>
                             </Link>
-                            
-                              <button
-                                className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3  mx-5 rounded"
-                                onClick={() => makePayment(emp)} 
-                              >
-                                Pay
-                              </button>
-                            
+
+                            <button
+                              className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3  mx-5 rounded"
+                              onClick={() => makePayment(emp)}
+                            >
+                              Pay
+                            </button>
                           </div>
                         </td>
                       </tr>
