@@ -79,6 +79,8 @@ export const SignIn: FC = ({}) => {
       }
 
       console.log(`NFTList updated, `, NFTList);
+
+      //get metadata
       const getMetadata = async () => {
         const { data } = await axios.post(url, {
           mintAccounts: NFTList,
