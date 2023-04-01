@@ -20,7 +20,11 @@ import {
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import { Metaplex } from "@metaplex-foundation/js";
 import { notify } from "utils/notifications";
-import { getOrCreateAssociatedTokenAccount, createTransferInstruction } from "@solana/spl-token";
+import {
+  getOrCreateAssociatedTokenAccount,
+  createTransferInstruction,
+} from "@solana/spl-token";
+import { PayEmployee } from "components/payEmployee";
 
 type nftType = {
   companyName: string;
@@ -158,75 +162,6 @@ export function EmployeeOverview({}) {
   }
   console.log(emps);
 
-  async function makePayment(nft: nftType) {
-    
-    const largestAccounts = await connection.getTokenLargestAccounts(
-      new PublicKey(nft.nftMint)
-    );
-    const largestAccountInfo = await connection.getParsedAccountInfo(
-      largestAccounts.value[0].address
-    );
-    console.log("addy: "+largestAccountInfo.value.data["parsed"]["info"]["owner"]);
-    const toWallet = new PublicKey(
-      largestAccountInfo.value.data["parsed"]["info"]["owner"]
-    );
-
-    if (!publicKey) {
-      notify({ type: "error", message: `Wallet not connected!` });
-      console.log("error", `Send Transaction: Wallet not connected!`);
-      return;
-    }
-
-    let signature: TransactionSignature = "";
-    try {
-      // Create instructions to send, in this case a simple transfer
-      const instructions = [
-        SystemProgram.transfer({
-          fromPubkey: publicKey,
-          toPubkey: toWallet,
-          lamports: parseInt(nft.pay),
-        }),
-      ];
-
-      // Get the lates block hash to use on our transaction and confirmation
-      let latestBlockhash = await connection.getLatestBlockhash();
-
-      // Create a new TransactionMessage with version and compile it to legacy
-      const messageLegacy = new TransactionMessage({
-        payerKey: publicKey,
-        recentBlockhash: latestBlockhash.blockhash,
-        instructions,
-      }).compileToLegacyMessage();
-
-      // Create a new VersionedTransacction which supports legacy and v0
-      const transation = new VersionedTransaction(messageLegacy);
-
-      // Send transaction and await for signature
-      signature = await sendTransaction(transation, connection);
-
-      // Send transaction and await for signature
-      await connection.confirmTransaction(
-        { signature, ...latestBlockhash },
-        "confirmed"
-      );
-
-      console.log(signature);
-      notify({
-        type: "success",
-        message: "Transaction successful!",
-        txid: signature,
-      });
-    } catch (error: any) {
-      notify({
-        type: "error",
-        message: `Transaction failed!`,
-        description: error?.message,
-        txid: signature,
-      });
-      console.log("error", `Transaction failed! ${error?.message}`, signature);
-      return;
-    }
-  }
   return (
     <div className="md:hero mx-auto p-5 m-10">
       {/* navigation buttons in top corners  */}
@@ -290,127 +225,12 @@ export function EmployeeOverview({}) {
                               </button>
                             </Link>
 
-                            <button
-                              className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3  mx-5 rounded"
-                              onClick={() => makePayment(emp)}
-                            >
-                              Pay
-                            </button>
+                            <PayEmployee nft={emp} />
                           </div>
                         </td>
                       </tr>
                     ))}
                   </tbody>
-                  {/* <tbody className="bg-gray-700 bg-opacity-60">
-                    <tr className="text-gray-100">
-                      <td className="px-4 py-3 border-y border-[#9477B7]">
-                        <div className="flex items-center text-sm">
-                          <div>
-                            <p className="font-semibold text-gray-100">
-                              Sol Ana
-                            </p>
-                            
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm font-semibold border-y border-[#9477B7]">
-                        Developer
-                      </td>
-                      <td className="px-4 py-3 text-xs border-y border-[#9477B7]">
-                        <span className="px-4 py-3 text-sm font-semibold">
-                          3000
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm border-y border-[#9477B7]">
-                      <div className="flex">
-                          
-                        <Link href={`${collectionID}/addEmployee`}>
-                          <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3  mx-5 rounded">
-                            View
-                          </button>
-                        </Link>
-                        <Link href={`${collectionID}/addEmployee`}>
-                          <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3  mx-5 rounded">
-                            Pay
-                          </button>
-                        </Link>
-                        
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="text-gray-100">
-                      <td className="px-4 py-3 border-y border-[#9477B7]">
-                        <div className="flex items-center text-sm">
-                          <div>
-                            <p className="font-semibold text-gray-100">
-                              Sol Ana
-                            </p>
-                            
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm font-semibold border-y border-[#9477B7]">
-                        Developer
-                      </td>
-                      <td className="px-4 py-3 text-xs border-y border-[#9477B7]">
-                        <span className="px-4 py-3 text-sm font-semibold">
-                          3000
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm border-y border-[#9477B7]">
-                        <div className="flex">
-                          
-                        <Link href={`${collectionID}/addEmployee`}>
-                          <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3  mx-5 rounded">
-                            View
-                          </button>
-                        </Link>
-                        <Link href={`${collectionID}/addEmployee`}>
-                          <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3  mx-5 rounded">
-                            Pay
-                          </button>
-                        </Link>
-                        
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="text-gray-100">
-                      <td className="px-4 py-3 border-y border-[#9477B7]">
-                        <div className="flex items-center text-sm">
-                          <div>
-                            <p className="font-semibold text-gray-100">
-                              Sol Ana
-                            </p>
-                            
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm font-semibold border-y border-[#9477B7]">
-                        Developer
-                      </td>
-                      <td className="px-4 py-3 text-xs border-y border-[#9477B7]">
-                        <span className="px-4 py-3 text-sm font-semibold">
-                          3000
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-sm border-y border-[#9477B7]">
-                        <div className="flex">
-                          
-                        <Link href={`${collectionID}/addEmployee`}>
-                          <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3  mx-5 rounded">
-                            View
-                          </button>
-                        </Link>
-                        <Link href={`${collectionID}/addEmployee`}>
-                          <button className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3  mx-5 rounded">
-                            Pay
-                          </button>
-                        </Link>
-                        
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody> */}
                 </table>
               </div>
             </div>
@@ -421,7 +241,6 @@ export function EmployeeOverview({}) {
             onClick={getEmployees}
             className=" bg-[#14F195] hover:scale-105 text-black font-bold p-2 rounded"
           >
-            {" "}
             Refresh
           </button>
         </div>
