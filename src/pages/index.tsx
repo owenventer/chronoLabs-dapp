@@ -61,8 +61,10 @@ export const SignIn: FC = ({}) => {
         accounts.forEach((account, i) => {
           //Parse the account data
           const parsedAccountInfo: any = account.account.data;
+          console.log("parsedAccountInfo: ", parsedAccountInfo);
           if (
-            parsedAccountInfo["parsed"]["info"]["tokenAmount"]["uiAmount"] > 0
+            parsedAccountInfo["parsed"]["info"]["tokenAmount"]["uiAmount"] > 0  
+            && parsedAccountInfo["parsed"]["info"]["tokenAmount"]["decimals"] == 0
           ) {
             const mintAddress: string =
               parsedAccountInfo["parsed"]["info"]["mint"];
