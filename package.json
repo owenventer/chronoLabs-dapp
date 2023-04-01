@@ -15,6 +15,7 @@
     "@metaplex-foundation/js": "^0.18.3",
     "@noble/ed25519": "^1.7.1",
     "@solana/pay": "^0.2.4",
+    "@solana/spl-token": "^0.3.7",
     "@solana/wallet-adapter-base": "^0.9.20",
     "@solana/wallet-adapter-react": "^0.15.28",
     "@solana/wallet-adapter-react-ui": "^0.9.27",

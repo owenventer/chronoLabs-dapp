@@ -4,6 +4,8 @@ import {
   LAMPORTS_PER_SOL,
   PublicKey,
   SystemProgram,
+  Transaction,
+  TransactionInstruction,
   TransactionMessage,
   TransactionSignature,
   VersionedTransaction,
@@ -11,6 +13,8 @@ import {
 import { FC, useCallback } from "react";
 import { notify } from "../utils/notifications";
 import useUserSOLBalanceStore from "../stores/useUserSOLBalanceStore";
+import { SignerWalletAdapterProps, WalletNotConnectedError } from "@solana/wallet-adapter-base";
+import { createAssociatedTokenAccountInstruction, createTransferInstruction, getAccount, getAssociatedTokenAddress } from "@solana/spl-token";
 
 type nftType = {
   companyName: string;
@@ -32,88 +36,107 @@ type nftType = {
   nftMint: string;
 };
 
-export function PayEmployee(nft) {
-  const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
-  const { publicKey, sendTransaction } = useWallet();
+const configureAndSendCurrentTransaction = async (
+    transaction: Transaction,
+    connection: Connection,
+    feePayer: PublicKey,
+    signTransaction: SignerWalletAdapterProps['signTransaction']
+  ) => {
+    console.log("inside configure and send")
+    const blockHash = await connection.getLatestBlockhash();
+    transaction.feePayer = feePayer;
+    transaction.recentBlockhash = blockHash.blockhash;
+    const signed = await signTransaction(transaction);
+    const signature = await connection.sendRawTransaction(signed.serialize());
+    await connection.confirmTransaction({
+      blockhash: blockHash.blockhash,
+      lastValidBlockHeight: blockHash.lastValidBlockHeight,
+      signature
+    });
+    return signature;
+  };
 
-  async function makePayment() {
-    console.log(nft.nftMint);
-    //USDC : https://stackoverflow.com/questions/70224185/how-to-transfer-custom-spl-token-by-solana-web3-js-and-solana-sol-wallet-ad
+export function PayEmployee(props) {
 
+    const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
+    const { publicKey, sendTransaction,signTransaction } = useWallet();
+
+  async function handlePayment(){
+    console.log(props.nft.nftMint);
+    //get receiver address
     const largestAccounts = await connection.getTokenLargestAccounts(
-      new PublicKey(""+nft.nftMint)
-    );
-    const largestAccountInfo = await connection.getParsedAccountInfo(
-      largestAccounts.value[0].address
-    );
-    console.log(
-      "addy: " + largestAccountInfo.value.data["parsed"]["info"]["owner"]
-    );
-    const toWallet = new PublicKey(
-      largestAccountInfo.value.data["parsed"]["info"]["owner"]
-    );
-
-    if (!publicKey) {
-      notify({ type: "error", message: `Wallet not connected!` });
-      console.log("error", `Send Transaction: Wallet not connected!`);
-      return;
-    }
-
-    let signature: TransactionSignature = "";
-    try {
-      // Create instructions to send, in this case a simple transfer
-      const instructions = [
-        SystemProgram.transfer({
-          fromPubkey: publicKey,
-          toPubkey: toWallet,
-          lamports: parseInt(nft.pay) ,
-        }),
-      ];
-
-      // Get the lates block hash to use on our transaction and confirmation
-      let latestBlockhash = await connection.getLatestBlockhash();
-
-      // Create a new TransactionMessage with version and compile it to legacy
-      const messageLegacy = new TransactionMessage({
-        payerKey: publicKey,
-        recentBlockhash: latestBlockhash.blockhash,
-        instructions,
-      }).compileToLegacyMessage();
-
-      // Create a new VersionedTransacction which supports legacy and v0
-      const transaction = new VersionedTransaction(messageLegacy);
-
-      // Send transaction and await for signature
-      signature = await sendTransaction(transaction, connection);
-
-      // Send transaction and await for signature
-      await connection.confirmTransaction(
-        { signature, ...latestBlockhash },
-        "confirmed"
+        new PublicKey(props.nft.nftMint)
+      );
+      const largestAccountInfo = await connection.getParsedAccountInfo(
+        largestAccounts.value[0].address
+      );
+      console.log(
+        "addy: " + largestAccountInfo.value.data["parsed"]["info"]["owner"]
+      );
+      const recipientAddress = new PublicKey(
+        largestAccountInfo.value.data["parsed"]["info"]["owner"]
       );
 
-      console.log(signature);
-      notify({
-        type: "success",
-        message: "Transaction successful!",
-        txid: signature,
-      });
-    } catch (error: any) {
-      notify({
-        type: "error",
-        message: `Transaction failed!`,
-        description: error?.message,
-        txid: signature,
-      });
-      console.log("error", `Transaction failed! ${error?.message}`, signature);
-      return;
-    }
-  }
+    try {
+      if (!publicKey) {
+        throw new WalletNotConnectedError();
+      }
+      const mintToken = new PublicKey(
+        'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
+      ); // EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v is USDC token address on solana mainnet
+      
+        console.log("creating accounts")
+      const transactionInstructions: TransactionInstruction[] = [];
+      const associatedTokenFrom = await getAssociatedTokenAddress(
+        mintToken,
+        publicKey
+      );
+      if (!(await connection.getAccountInfo(associatedTokenFrom))) {
+        console.log("inside if statement")
+        transactionInstructions.push(
+          createAssociatedTokenAccountInstruction(
+            publicKey,
+            associatedTokenFrom,
+            recipientAddress,
+            mintToken
+          )
+        );
+      }
+      const fromAccount = await getAccount(connection, associatedTokenFrom);
+      const associatedTokenTo = await getAssociatedTokenAddress(
+        mintToken,
+        recipientAddress
+      );
+      console.log("just before if statement")
+      if (!(await connection.getAccountInfo(associatedTokenTo))) {
+        console.log("NO USDC")
+        
+      }
+      console.log("pushing transfer instruction")
+      transactionInstructions.push(
+        createTransferInstruction(
+          fromAccount.address, // source
+          associatedTokenTo, // dest
+          publicKey,
+          1000000 // transfer 1 USDC, USDC on solana has 6 decimal
+        )
+      );
+      const transaction = new Transaction().add(...transactionInstructions);
+      const signature = await configureAndSendCurrentTransaction(
+        transaction,
+        connection,
+        publicKey,
+        signTransaction
+      );
+      // signature is transaction address, you can confirm your transaction on 'https://explorer.solana.com/?cluster=devnet'
+    } catch (error) {}
+  };
+  
 
   return (
     <button
       className="bg-[#14F195] hover:scale-105 text-black font-bold p-2 w-2/3  mx-5 rounded"
-      onClick={() => makePayment()}
+      onClick={() => handlePayment()}
     >
       Pay
     </button>
