@@ -13,7 +13,14 @@ import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 export const HomeView: FC = ({}) => {
   const { publicKey, wallet } = useWallet();
   const { connection } = useConnection();
-  const { nfts } = useContext(userData);
+  var { nfts } = useContext(userData);
+  function showNFTs() {
+    console.log(nfts);
+
+  }
+  function GetNFTs() {
+   nfts=useContext(userData);
+  }
   return (
     <>
       {publicKey && (
@@ -35,7 +42,14 @@ export const HomeView: FC = ({}) => {
               <div>
                 <CompanyList nfts={nfts}/>
               </div>
+              <button
+                  className="bg-[#14F195] hover:hover:scale-105 text-black font-bold py-2 px-2 m-2 rounded"
+                  onClick={GetNFTs}
+                >
+                  Refresh NFTs
+                </button>
             </div>
+            {/* <button className=" absolute bottom-20 right-10 shadow-lg bg-black bg-opacity-50 rounded text-gray-100 p-2 " onClick={showNFTs}>ShowNFTs</button> */}
           </div>
         </>
       )}

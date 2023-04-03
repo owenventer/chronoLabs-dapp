@@ -84,6 +84,7 @@ export const SignIn: FC = ({}) => {
 
       //get metadata
       const getMetadata = async () => {
+        setNFTs([]);
         const { data } = await axios.post(url, {
           mintAccounts: NFTList,
           includeOffChain: true,

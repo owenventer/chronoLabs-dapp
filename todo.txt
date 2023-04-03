@@ -1,6 +1,6 @@
 Todo list:
 - Add "to" address when minting employee NFTs
-
+- add a loop function in the index.tsx file so that you can scan wallets with more than 100 tokens
 
 Employer:
 -Add Employee report ( all employees tasks)
