@@ -9,11 +9,12 @@ import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 // Components
 import { GenerateSolPay } from "../../../../components/GenerateSolPay";
 import { useRouter } from "next/router";
+import { Connection } from "@solana/web3.js";
 
 export const PointOfSale: FC = ({}) => {
   const wallet = useWallet();
   console.log(wallet);
-  const { connection } = useConnection();
+  const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
 
   //Link for company image
   const { nfts } = useContext(userData);
@@ -38,7 +39,7 @@ export const PointOfSale: FC = ({}) => {
       <button className=" absolute top-20 right-10 shadow-lg bg-black bg-opacity-50 rounded text-gray-100 py-2 px-2 ">
         My Profile
       </button>
-      <Link href="/">
+      <Link href={`../${collectionID}`}>
         <button className=" absolute top-20 left-10 shadow-lg bg-black bg-opacity-50 rounded text-gray-100 py-2 px-2 ">
           Back
         </button>

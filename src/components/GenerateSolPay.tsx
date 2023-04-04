@@ -8,17 +8,13 @@ import { encodeURL, createQR, findReference, FindReferenceError, validateTransfe
 
 async function validatePayment(reference,paymentStatus,recipient,amount,url){
 
-    const connection = new Connection(
-        //get mainnet RPC
-        process.env.NEXTfi_PUBLIC_RPC,
-        'confirmed',
-      );
+    const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
       
     console.log('5. Find the transaction');
     console.log("URL coming in: "+url);
     let signatureInfo;
    
-    const { signature } = await new Promise((resolve, reject) => {
+    const  signature = await new Promise((resolve, reject) => {
         /**
          * Retry until we find the transaction
          *
